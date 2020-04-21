@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 
 
-<title>index</title>
+<title>introduccion</title>
 
 <style type="text/css">
     /*!
@@ -13138,48 +13138,98 @@ div#notebook {
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="-Aplicaciones-de-electr&#243;nica-Anal&#243;gica--"><span style="color:blue"> Aplicaciones de electr&#243;nica Anal&#243;gica  </span><a class="anchor-link" href="#-Aplicaciones-de-electr&#243;nica-Anal&#243;gica--">&#182;</a></h1><p>Esta colección de <a href="https://jupyter.org/">jupyter</a> notebooks pretende ser un apunto interactivo para la materia <strong>AEA</strong> dictada en la escuela E.E.S.T. N° 1 de Vicente López. Cáda uno de estos notebooks sirve como apunte de la materia así como los demás apuntes disponibles en el <a href="https://eest.tecnica1vl.org/tecmood/">moodle</a>. Les recomiendo fervientemente que lean el <a href="https://drive.google.com/file/d/0BytGI1D61kXQS2VhNEo3Tkc3cmM/view">Apunte AEA</a> además del presente y profundizar en la bibliografía recomendada.</p>
+<h1><span style="color:blue">  Mediciones y Errores <span></h1>
+<h2><span style="color:blue">Introducción <span></h2>
+<p>Uno de los primeros conceptos desarrollados por el hombre fue el de número, ya que tenía la necesidad de poder expresar numéricamente todo lo que se encontraba a su alrededor. El ser humano necesitaba comparar objetos como animales y alimentos o eventos como estaciones del año y temperaturaEntonces, que le permitieran desarrollar la agricultura.</p>
+<p>Mas tarde usó la medición como un forma de entender el mundo que nos rodea y expandir las fronteras del conocimiento, cosa que seguimos haciendo hasta el día de hoy.</p>
+<p>Gracias a la medición, el hombre pudo construir refugios, navegar por lugares desconocidos lejos de las costas, construir los grandes monumentos que hasta el día de hoy se mantienen en pie como las pirámides y el Coliseo Romano. Ya en nuestra era nos permitió viajar al espació y a otro planetas, nos ayuda a entender el mundo en el que estamos, y hasta entender cosas que no vemos pero si podemos medir como las partículas subatómicas.</p>
+<p>La medición es una herramienta fundamental para nuestra vida diaria y profecional, por tal motivo es necesario entender los fundamentos de la misma.</p>
+<h2><span style="color:blue">¿Qué es medir?<span></h2>
+<p>En nuestra vida cotidiana estamos acostumbrados a medir todo el tiempo, aunque nunca nos tomamos el tiempo de reflexionar que es lo que estamos haciendo. Medimos nuestra altura, cuanto tardamos en ir al colegio, cuanto tiempo tardamos en realizar una tarea, la cantidad correcta de ingredientes para seguir una receta, etc.</p>
+<p>Si nos detenemos un momento podemos darnos cuenta que al medir estamos comparando una cosa con otra, estamos comparando una <strong>magnitud</strong> con otra.</p>
+<h3><span style="color:blue">¿Qué es Magnitud?<span></h3>
+<p>La magnitud son los atributos o características de un objeto, fenómeno o una sustancia susceptible de ser medido. Existen magnitudes básicas y derivadas, que constituyen ejemplos de magnitudes físicas: la masa, la longitud, el tiempo, la carga eléctrica, la densidad, la temperatura, la velocidad, la aceleración y la energía, etc.</p>
+<p>Las magnitudes se representan con símbolos y normalmente las denominamos <strong>variables</strong></p>
+<h3><span style="color:blue">¿Y cantidad? <span></h3>
+<p>La cantidad, son las  magnitudes de un cuerpo, fenómeno o una sustancia en particular que que permite comparar cualitativamente respecto de la que se tomó como unidad de la magnitud, por ejemplo la longitud de una mesa en particular <strong>"mi escritorio"</strong>, es una cantidad. Otro ejemplo sería la masa de <strong>mi</strong> libro de analógica es una <strong>cantidad</strong> de masa.</p>
+<p>Podemos definir a la <strong><em>medida</em></strong> como:</p>
+<div class="alert alert-block alert-info">
+<b>Medir</b> una cantidad <b>x</b> (o variable x) es <b>compararla</b>   con otra cantidad arbitraria <b>U</b> de la misma magnitud denominada <b> Unidad </b> (simbólicamente se indica como el cociente $\frac{A}{U}$). El resultado, es el número de veces que la cantidad contiene a la unidad, es un número real denomindado <b> Medida</b> que no es otra cosa que el valor de la cantidad
 
+$$ \boxed {A = X * U} $$  
+
+donde: 
+
+* <b>A</b>: es la es el valor de la medida
+* <b>X</b>: es la cantidad de la medida
+* <b>U</b>: es la unidad con la que estamos comparando.
+</div><p>Podemos ver esta misma ecuación como $$\boxed{X = \frac{A}{U}}$$ donde queda mas claro que la cantidad se obtiene de comparar el valor de nuestra medida con un patron que es la unidad.</p>
+<p>A lo largo de este apunte realizaremos muchos ejemplos para que las cosas que vista desde su definición parecen complejas, se entiendan.</p>
+<div class="alert alert-block alert-success">
+<b> Ejemplo n° 1</b> 
+Si tomamos una resistencia de valor 220 $\Omega$, $$X = \frac{220\Omega}{1\Omega}$$, esto quiere decir que la cantidad de la medida es <b>220</b>
+</div><p>Lo que hacemos durante el proceso de medición es comparar una cantidad de una magnitud de un objeto con un patron preestablecido de esa magnitud, en este caso ohms.</p>
+<h2 id="**Proceso-de-medici&#243;n**"><span style="color:blue">**Proceso de medici&#243;n**</span><a class="anchor-link" href="#**Proceso-de-medici&#243;n**">&#182;</a></h2><p>Medir no representa en la mayoría de los casos una tarea sencilla. La <strong><em>Metrología</em></strong> es la ciencia que estudia las mediciones de las magnitudes garantizando su normalización mediante la trazabilidad. Se encargan de diseñar el proceso de medición mas indicado para cada caso, reduciendo las <strong>incertidumbres</strong> de las mediciones. También se encargan de definir los patrones que utlizamos para medir como el metro, Kelvi, Ampere, etc.</p>
+<p>Podemos definir tres sistemas que se encuentran en todo proceso de medición:</p>
+<ul>
+<li><p><span style="color:red">**_Sistema objeto_**</span> Es lo que se desea medir. COnsiste en una cantidad de cierta magnitud física. Por ejemplo medir la longitud de una maesa.</p>
+</li>
+<li><p><span style="color:red">**_Sistema de medición_**</span> Es el dispositivo con el que se efectuará la medición. La elección de este dispositivo depende la magnitud a medir y de cuan precisa debe ser la medida. Por ejemplo para medir una longitud pequeña se puede usar una regla, un calibre o un micrómetro. Otro ejemplo puede ser que para medir tiempo podemos utilizar un reloj o un cronómetro.</p>
+</li>
+<li><p><span style="color:red">**_Operador_**</span> El operador es la persona que se encarga de llevar a cavo la medición en forma <strong>correcta</strong>, efectuando las lecturas en la escala del instrumento utilizado. Para lograr esto es necesario conocer como utilizar el instrumento y las unidades. Por ejemplo, para medir la longitud de una varilla, se debe ubicar el extremo izquierdo de la misma en coincidencia con el cero de la regla y ver en el otro extremo con que división de la regla coincide.</p>
+<p><img src="Imagenes/sistema.png" width="600" height="360"></p>
+</li>
+</ul>
+<h3 id="**Protocolo-de-medici&#243;n**"><span style="color:blue">**Protocolo de medici&#243;n**</span><a class="anchor-link" href="#**Protocolo-de-medici&#243;n**">&#182;</a></h3><p>Antes de medir nos tenemos que hacer estas preguntas</p>
+<ul>
+<li><p><span style="color:red">**¿Para qué medimos?**</span>  Debemos saber cual es el objetivo de la medición para saber que precisión(vamos a ver esta palabra mas adelante) necesitamos.</p>
+</li>
+<li><p><span style="color:red">**¿Qué medimos?**</span>   Tenemos que seleccionar las <strong>magnitudes</strong> adecuadas de acuerdo a nuestro objetivo.</p>
+</li>
+<li><p><span style="color:red">**¿Cómo se mide?**</span>  Debemos seleccionar el/los instrumentos necesarios.</p>
+</li>
+<li><p><span style="color:red">**¿Cómo vamos a medir?**</span>  Tenemos que establecer los pasos a seguir para determinar la magnitud correspondiente.</p>
+</li>
+<li><p><span style="color:red">**¿Cuantas veces se mide?**</span>  Hay que medir varias veces para minimizar los <span style="color:red">**errores**</span></p>
+</li>
+</ul>
+<h3 id="**&#191;Errores?**"><span style="color:blue">**&#191;Errores?**</span><a class="anchor-link" href="#**&#191;Errores?**">&#182;</a></h3><p>Tal vez seria mas correcto llamarlos incertezas, pero también reciben el nombre de errores. Como vimos al medir una magnitud física, tenemos diferentes forma de hacerlo y es muy probable que al medirla de las distintas formas, el resultado de cada medición sea distinta, incluso si medimos varias veces de la misma forma. ¿Esto quiere decir que los resultados no incorrectos?, ¿Alguno de ellos es correcto? ¿Qué valor tomo como resultado de la medición?</p>
+<p>La respuesta a la primera pregunta es no, solo significa que tenemos un cierto grado de incerteza en todas las medidas que realicemos, lo que quiere decir que <strong>nunca vamos a conocer el valor verdadero de una medición</strong>. La respuesta a la segunda pregunta es puede ser que si y puede ser que no, pero nunca lo vamos a saber. La tercer pregunta la vamos a responder un poco mas adelante.</p>
+<h2 id="Podemos-conclu&#237;r-que-al-realizar-una-medici&#243;n-podemos-establecer-el-valor-verdadero-de-la-misma-entre-ciertos-l&#237;mites-pero-nunca-su-valor-verdadero.-Esto-se-debe-a-que-hay-m&#250;ltiples-factores-que-afectan-a-la-medici&#243;n-y-estudiaremos-en-detalle-en-la-siguiente-secci&#243;n."><span style="color:red"><b>Podemos conclu&#237;r que al realizar una medici&#243;n podemos establecer el valor verdadero de la misma entre ciertos l&#237;mites pero nunca su valor verdadero. Esto se debe a que hay m&#250;ltiples factores que afectan a la medici&#243;n y estudiaremos en detalle en la siguiente secci&#243;n.</b></span><a class="anchor-link" href="#Podemos-conclu&#237;r-que-al-realizar-una-medici&#243;n-podemos-establecer-el-valor-verdadero-de-la-misma-entre-ciertos-l&#237;mites-pero-nunca-su-valor-verdadero.-Esto-se-debe-a-que-hay-m&#250;ltiples-factores-que-afectan-a-la-medici&#243;n-y-estudiaremos-en-detalle-en-la-siguiente-secci&#243;n.">&#182;</a></h2><h3 id="Podemos-definir-al-error-como:">Podemos definir al <strong><em>error</em></strong> como:<a class="anchor-link" href="#Podemos-definir-al-error-como:">&#182;</a></h3><div class="alert alert-block alert-info">
+El grado de incerteza de una medición debido a las limitaciones inevitables de los instrumentos y del observador, a condiciones exteriores por lo general fluctuantes. Impidiendo que la medición sea perfecta y solo permitíendonos caracterizar a la medida por un intervalo llamado <span style="color:brown"><b>intervalo de indeterminación o incertidumbre</b></span> dentro del cual se puede afirmar con un alto grado de certeza que se halla el valor verdadero 
+</div><p>En la siguiente imagen se puede observar un intervalo de incerteza que se limita por los vamores máximos y mínimos que puede tomar la medición.
+<img src="Imagenes/medida1.png" width="600" height="300"></p>
+<p>Podemos mejorar la calidad de la medición reduciendo el intervalo de indeterminación, utilizando un instrumento mas preciso, por ejemplo usando un calibre en vez de una regla.</p>
+<p><img src="Imagenes/medida2.png" width="600" height="300"></p>
+<p>Dependiendo de lo que estemos midiendo no siempre es necesario hacerlo, por ejemplo al usar cuando un cocinero utiliza un termómetro para controlar la temperatura, una incertidumbre de 1°C es suficiente, no necesitan medir la temperatura con décimas o milecimas de grados, lo cual sumaría un costo mayor sin ningún tipo de beneficio.</p>
+<div class="alert alert-block alert-warning">
+Matemáticamente lo podemos expresar como: 
+
+$$ \boxed{x_{min} \leq x \leq x_{máx}}$$
+
+donde <b>x</b> es el valor verdadero de la medida. 
+</div><p>Para terminar, toda medida debe expresarse de la siguiente forma:</p>
+<div class="alert alert-block alert-warning">
+Matemáticamente lo podemos expresar como: 
+
+$$ \boxed{X = X_o \pm \Delta X}$$
+
+donde:    
+*  <b>X</b> es el resultado de la medición. 
+*  <b>$X_o$</b> es el valor representativo de la medición (el valor que coincidieramos como verdadero). 
+*  <b>$\Delta X$</b> es el error absoluto, incerteza o indeterminación de la medición.
+</div><p>Profundizaremos en esto el la siguiente sección.</p>
+<h2 id="Toda-medici&#243;n-que-se-realiza-debe-expresarse-de-esta-forma,-de-lo-contrario-no-esta-bien-representada-y-su-resultado-carece-de-sentido.-"><span style="color:red"><b>Toda medici&#243;n que se realiza debe expresarse de esta forma, de lo contrario no esta bien representada y su resultado carece de sentido. </b></span><a class="anchor-link" href="#Toda-medici&#243;n-que-se-realiza-debe-expresarse-de-esta-forma,-de-lo-contrario-no-esta-bien-representada-y-su-resultado-carece-de-sentido.-">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Tabla-de-contenidos">Tabla de contenidos<a class="anchor-link" href="#Tabla-de-contenidos">&#182;</a></h2><h3 id="1-Introducci&#243;n">1 <strong>Introducci&#243;n</strong><a class="anchor-link" href="#1-Introducci&#243;n">&#182;</a></h3><ul>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/introduccion.html">Introducción</a>  </li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/expectativas_de_logro.html">Expectativas de logro</a></li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/Indicadores_de_logro.html">Indicadores de logro</a></li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/Criterios_de_evaluacion.html">Criterios de evaluación</a></li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/normativa.html">Normativa</a></li>
-<li><a href="https://drive.google.com/file/d/1g21Igdu0LwUQF7Z-pMbhceYftsqtdDoi/view?usp=sharing">Cronograma 4° 3ra grupo A</a></li>
-</ul>
-<h3 id="2--Mediciones-y-Errores">2  Mediciones y Errores<a class="anchor-link" href="#2--Mediciones-y-Errores">&#182;</a></h3><ul>
-<li><a href="https://nicolasferragamo.github.io/AEA/Mediciones/introduccion.html">Introducción</a>  </li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Mediciones/errores.html">Errores</a>  </li>
-</ul>
-<h3 id="3--Instrumentos">3  Instrumentos<a class="anchor-link" href="#3--Instrumentos">&#182;</a></h3><h3 id="4---Funciones">4   Funciones<a class="anchor-link" href="#4---Funciones">&#182;</a></h3><h3 id="5-Se&#241;ales"><strong>5 Se&#241;ales</strong><a class="anchor-link" href="#5-Se&#241;ales">&#182;</a></h3><h3 id="6-Osciloscopia"><strong>6 Osciloscopia</strong><a class="anchor-link" href="#6-Osciloscopia">&#182;</a></h3><h3 id="7-Electromagnetismo"><strong>7 Electromagnetismo</strong><a class="anchor-link" href="#7-Electromagnetismo">&#182;</a></h3><h3 id="8-Transformadores"><strong>8 Transformadores</strong><a class="anchor-link" href="#8-Transformadores">&#182;</a></h3><h3 id="9-Fuentes-de-alimentaci&#243;n-linealies"><strong>9 Fuentes de alimentaci&#243;n linealies</strong><a class="anchor-link" href="#9-Fuentes-de-alimentaci&#243;n-linealies">&#182;</a></h3><h3 id="10-Semiconductores"><strong>10 Semiconductores</strong><a class="anchor-link" href="#10-Semiconductores">&#182;</a></h3><h3 id="11-Diodos"><strong>11 Diodos</strong><a class="anchor-link" href="#11-Diodos">&#182;</a></h3><h3 id="12-Transistores-en-conmutaci&#243;n"><strong>12 Transistores en conmutaci&#243;n</strong><a class="anchor-link" href="#12-Transistores-en-conmutaci&#243;n">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Referencias">Referencias<a class="anchor-link" href="#Referencias">&#182;</a></h1><ul>
-<li>Electrónica: Teoría de circuitos y dispositivos electrónicos, Robert L. Boylestad, Pearson Prentice Hall.</li>
-<li>Introducción al análisis de circuitos, Boylestad, Pearson Prentice Hall.</li>
-<li>Electrónica analógica, Jose maría Virgili, Juan Molnar.</li>
-<li>Precálculo matemáticas para el cálculo, James Stewart, Lothar Redlin, Saleem Watson, Cengage Learning.</li>
-<li>Circuitos microelectrónicos, Adel S. Sedra, Kenneth C. Smith, Oxford University Press.</li>
-<li>Mediciónes y errores, Cs Básicas - U.D.B. Física, Centro de estudiantes de ingeniería tecnológica.</li>
-<li>Conceptos básicos de la Electrónica Aplicada, Esteban Lemos.</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Autor">Autor<a class="anchor-link" href="#Autor">&#182;</a></h1><p>Nicolás Ferragamo</p>
-
+<form method="get" action="https://nicolasferragamo.github.io/AEA/index.html">
+ <button type="submit">Inicio
+</form><form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/errores.html">
+ <button type="submit">Siguietne
+</form>
 </div>
 </div>
 </div>

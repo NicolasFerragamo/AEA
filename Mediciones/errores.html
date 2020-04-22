@@ -13418,12 +13418,249 @@ $$ X = 4,5 \pm 0,4 cm $$<p></p>
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-warning">
+Dadas las siguientes medidas:    
+$$$$      
+$ X_a = 10m \pm \Delta 0,1m$
+$$$$  
+$ X_b = 10Km \pm \Delta 0,01Km$
+$$$$ 
+$ X_c = 1l \pm \Delta 0,01l$
+$$$$ 
+$ X_d = 50mA \pm \Delta 0,1mA$
+$$$$     
+</div>
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">nbi</span><span class="o">.</span><span class="n">multiple_choice</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;¿Cuál es la mas precisa?&quot;</span><span class="p">,</span>
+                    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Xa&#39;</span><span class="p">,</span> <span class="s1">&#39;Xb&#39;</span><span class="p">,</span><span class="s1">&#39;Xc&#39;</span><span class="p">,</span><span class="s1">&#39;Xd&#39;</span><span class="p">],</span>
+                    <span class="n">answers</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-&#161;Cuidado-no-puede-compara-medidas-en-distintas-unidades!-adem&#225;s-aunque-seguramente-penso-que-cometer-un-error-de-10-metros-significa-que-mi-medida-es-menos-precisa-que-cometer-un-error-de-10-cm-no-tiene-por-que-ser-as&#237;.-Esto-nos-indica-que-el-error-absoluto-no-es-fiable-para-comparar-mediciones-y-necesitamos-otra-herramienta-nueva.-"><span style="color:brown"> &#161;Cuidado no puede compara medidas en distintas unidades! adem&#225;s aunque seguramente penso que cometer un error de 10 metros significa que mi medida es menos precisa que cometer un error de 10 cm no tiene por que ser as&#237;. Esto nos indica que el error absoluto no es fiable para comparar mediciones y necesitamos otra herramienta nueva. </span><a class="anchor-link" href="#-&#161;Cuidado-no-puede-compara-medidas-en-distintas-unidades!-adem&#225;s-aunque-seguramente-penso-que-cometer-un-error-de-10-metros-significa-que-mi-medida-es-menos-precisa-que-cometer-un-error-de-10-cm-no-tiene-por-que-ser-as&#237;.-Esto-nos-indica-que-el-error-absoluto-no-es-fiable-para-comparar-mediciones-y-necesitamos-otra-herramienta-nueva.-">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h3><span style="color:red">Error Relativo:<span></h3>
-<h3><span style="color:red">Error Relativo porcentual:<span></h3>
+<p>El <strong>error relativo</strong> viene a solucionar el problema que se nos presento ya que al no tener unidades, me permite comparar mediciones de distintas magnitudes y contempla en él, la proporción que afecta a la medición el error cometido. Es el error mas útil.</p>
+<div class="alert alert-block alert-info">
+<b> Error relativo:</b> Es la relación proporcional entre el valor representativo $X_o$ y el error absoluto $\Delta X$. <b> Es adimensional</b>
+
+Se representa con la letra griega épsilon $\epsilon_r$
+
+$$$$      
+$$ \boxed{ \epsilon_r = \frac{\Delta X}{X_o}} $$ 
+
+Donde: 
+$$$$      
+$X_o$ es el valor representativo de la medición.
+$$$$     
+$\Delta X$ es el error absoluto de la medición.
+$$$$         
+</div><h3><span style="color:red">Error Relativo porcentual:<span></h3>
+<div class="alert alert-block alert-info">    
+<b> Error relativo porcentual:</b> Es la relación porcentual entre el valor representativo $X_o$ y el error absoluto $\Delta X$ . 
+
+Se representa con la letra griega épsilon $\epsilon_r$ 
+
+$$$$      
+$$ \boxed{ \epsilon_{r\%} = \frac{\Delta X}{X_o} *100 \%} $$ 
+$$$$       
+$$ \boxed{ \epsilon_{r\%} = \epsilon_r *100 \%} $$     
+Donde: 
+$$$$      
+$X_o$ es el valor representativo de la medición.
+$$$$     
+$\Delta X$ es el error absoluto de la medición.
+$$$$     
+</div><p>Probablemente conozca al <strong>error relativo porcentual</strong> como <strong>tolerancia</strong></p>
+<h3 id="-Cuidado-con-ponerle-unidades,-el-error-relativo-es-**adimencional**-lo-que-nos-permite-comparar-medidas-de-distintas-magnitudes.-"><span style="color:brown"> Cuidado con ponerle unidades, el error relativo es **adimencional** lo que nos permite comparar medidas de distintas magnitudes. </span><a class="anchor-link" href="#-Cuidado-con-ponerle-unidades,-el-error-relativo-es-**adimencional**-lo-que-nos-permite-comparar-medidas-de-distintas-magnitudes.-">&#182;</a></h3><div class="alert alert-block alert-success">    
+<b> Ejemplo 2:</b> Contestemos ahora la pregunta que planteamos mas arriba.  Para ello vamos a calcular el <b> error relativo </b> de cada medición.
+
+
+Se representa con la letra griega épsilon $\epsilon_r$ 
+
+$$$$ 
+
+$ \epsilon_r = \frac{0,1 m}{10 m} = 0,01 \Rightarrow \epsilon_{r\%} = 1 \%$
+
+$$$$       
+$ \epsilon_r = \frac{0,01 Km}{10 Km} = 0,001 \Rightarrow  \epsilon_{r\%}= 0,1 \%$   
+
+$$$$      
+$\epsilon_r = \frac{0,01 l}{1 l} = 0,01 \Rightarrow  \epsilon_{r\%} = 1 \% $
+
+$$$$     
+$\epsilon_r = \frac{50 mA}{0,1 mA} = 0,002 \Rightarrow \epsilon_{r\%} = 0,2 \%$ 
+
+</div><p>Por lo tanto podemos notar que la medida a y c poseen la misma precisión, mientras que la mas precisa es la medida b seguida de la d.</p>
+<div class="alert alert-block alert-success">    
+<b> Ejemplo 3:</b> Dada una resistencia de 100 $\Omega$ con una tolerancia de 5 $\%$ obtener $R_{mín}, R_{máx}$ y escriba la medición de forma estandar.
+
+
+Recordemos que la tolerancia es el valor del <b>error relativo porcentual</b>, por lo cual si lo dividimos por 100 obtenemso el $\epsilon_r$ .
+$$$$       
+$$ \epsilon_r = \frac{\epsilon_{r \%}}{100} = \frac{5}{100} = 0,05 $$    
+
+despejando de la ecuación de error relativo nos queda  
+$$$$     
+$$ \Delta R = \epsilon_{r} * R_o = 0,05 * 100 = 5 $$  
+$$$$  
+
+$$ R_{min} = R_o - \Delta R = 100 - 5 = 95$$   
+
+$$ R_{máx} = R_o + \Delta R = 100 + 5 = 105$$      
+$$$$      
+Por último la medición se escribe:
+$$$$     
+
+$$ \boxed{R = 100 \pm 5 \Omega}$$
 
 </div>
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-danger">    
+<b> Ejercicio:</b> Suponga una resistencia con una tolerancia de 1 $\%$, que tiene un valor nominal de 10 K$\Omega$ y al realizar su medición da como resultado un valor de 9991 $\Omega$. Sin tener en cuenta los errores de medición responda:    
+</div>
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">nbi</span><span class="o">.</span><span class="n">short_answer</span><span class="p">(</span><span class="s1">&#39;¿Cuál es el error absoluto de fabricación de la resistencia?. Escriba el número&#39;</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;9&#39;</span><span class="p">,</span>
+                  <span class="n">explanation</span><span class="o">=</span><span class="s1">&#39;|Ri - Rv|= |9991- 10000| = 9 Ohms&#39;</span> <span class="p">)</span>
+
+<span class="n">nbi</span><span class="o">.</span><span class="n">short_answer</span><span class="p">(</span><span class="s1">&#39;¿Cuál es el error relativo?. Escriba el número con &quot;,&quot; como punto decimal&#39;</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;0,0009&#39;</span><span class="p">,</span>
+                  <span class="n">explanation</span><span class="o">=</span><span class="s1">&#39;e = error_absoluto/Ro = 9/10000 = 0,0009&#39;</span> <span class="p">)</span>
+
+<span class="n">nbi</span><span class="o">.</span><span class="n">short_answer</span><span class="p">(</span><span class="s1">&#39;¿Cuál es el error relativo porcential?. Escriba el número con &quot;,&quot; como punto decimal y sin el simbolo de &quot;%&quot;&#39;</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;0,09&#39;</span><span class="p">,</span>
+                  <span class="n">explanation</span><span class="o">=</span><span class="s1">&#39;er% = er *100% = 0,09%&#39;</span> <span class="p">)</span>
+
+<span class="n">nbi</span><span class="o">.</span><span class="n">multiple_choice</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;¿Se encuentra el valor de resistencia dentro de los valores indicados por el fabricante ?&quot;</span><span class="p">,</span>
+                    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;si&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;no lo puedo saver&#39;</span><span class="p">],</span>
+                    <span class="n">answers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <form method="get" action="https://nicolasferragamo.github.io/AEA/index.html">
@@ -13432,7 +13669,7 @@ $$ X = 4,5 \pm 0,4 cm $$<p></p>
 <form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/introduccion.html">
  <button type="submit">Anterior
 </form> 
-<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/.html">
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/Propagacon-de-errores.html">
  <button type="submit">Siguietne
 </form>
 </div>

@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 
 
-<title>index</title>
+<title>expresion-medicion</title>
 
 <style type="text/css">
     /*!
@@ -13138,50 +13138,475 @@ div#notebook {
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="-Aplicaciones-de-electr&#243;nica-Anal&#243;gica--"><span style="color:blue"> Aplicaciones de electr&#243;nica Anal&#243;gica  </span><a class="anchor-link" href="#-Aplicaciones-de-electr&#243;nica-Anal&#243;gica--">&#182;</a></h1><p>Esta colección de <a href="https://jupyter.org/">jupyter</a> notebooks pretende ser un apunto interactivo para la materia <strong>AEA</strong> dictada en la escuela E.E.S.T. N° 1 de Vicente López. Cáda uno de estos notebooks sirve como apunte de la materia así como los demás apuntes disponibles en el <a href="https://eest.tecnica1vl.org/tecmood/">moodle</a>. Les recomiendo fervientemente que lean el <a href="https://drive.google.com/file/d/0BytGI1D61kXQS2VhNEo3Tkc3cmM/view">Apunte AEA</a> además del presente y profundizar en la bibliografía recomendada.</p>
+<h1><span style="color:blue"> Expresión correcta de una medición <span></h1>
+<p>En la sección anterior vimos las causas que provocan errores en las mediciones, también vimos los tipos de errores y como calcularlos. En esta sección veremos como expresar la medición de forma correcta, con la cantidad de decimales adecuados.</p>
+<p>Pero antes vamos a ver dos conceptos necesarios para escribír el resultado de una medición.</p>
+<h2><span style="color:blue">Truncamiento y Redondeo<span></h2>
+<p>En muchos casos al realizar operaciónes matemáticas nos dan como resultado un número con muchos decimales. En la práctica no soloemos anotar todos los decimales por lo que estamos cometiendo un error en el resultado final. La manera de <strong>reducirlo, no de eliminarlo</strong> es redondear el número.</p>
+<p>Hay muchos tipos de rendondeo, probablemente ustedes esten acostumbrados al <strong>truncamiento</strong> pero este método es indeseado para nosotros. Vamos a explicarlo por si no todos estan familiarizados.</p>
+<h3><span style="color:red">Truncamiento:<span></h3>
+<p>Consiste en <strong>"cortar"</strong> el número con la cantidad de decimales que establecimos.</p>
+<div class="alert alert-block alert-success">
+<b>Ejemplo n°1</b> Supongamos que tenemos el número <b>12,46779987</b>, podemos quedarnos por ejemplo con dos decimales, por lo tanto el número que usamos es :<b>12,46</b>
+</div> 
+<div class="alert alert-block alert-success">
+<b>Ejemplo n°2</b> Supongamos que tenemos el número <b>0,2396168</b>, podemos quedarnos por ejemplo con cuatro decimanel, por lo tanto el número que usamos es :<b>0,2396</b>   
+</div><p>Esta es una posible implementación pero no es la mas adecuada, ya que si vemos el primer ejemplo, el número esta mas cerca de <b>12,47</b> que de <b>12,46</b>. Sin embargo en el segundo caso funcionó correctamente.</p>
+<p>En la siguiente animación puede variar con el slider un número de con 5 decimales, y con el otro slider puede decidir cuantos decimales quiere utilizar. Abajo vera el resultado del número truncado.</p>
+<p><strong>Antes de comenzar no olvide presionar el boton <span style="color:red">Show Widgets</span> para poder ver la animación</strong></p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span><span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;.5f&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">truncamiento</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">cant_decimlaes</span><span class="p">):</span>
+    <span class="n">stepper</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="n">cant_decimlaes</span>
+    <span class="n">numero</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">stepper</span> <span class="o">*</span> <span class="n">numero</span><span class="p">)</span> <span class="o">/</span> <span class="n">stepper</span>
+    <span class="k">return</span> <span class="s1">&#39;El número truncado con </span><span class="si">{}</span><span class="s1"> decimales es </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cant_decimlaes</span><span class="p">,</span> <span class="n">numero</span><span class="p">)</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">truncamiento</span><span class="p">,</span> <span class="n">numero</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">cant_decimlaes</span><span class="o">=</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3><span style="color:red">Redondeo:<span></h3>
+<p>Hay varios tipos de redondeo distintos, nosotros vamos a utilizar el <strong>redondea de la mitad para arriba</strong><br>
+Consiste en <strong>redondear</strong> el número con la cantidad de decimales deseados mirando el número a la derecha de la cantidad deseada, siguiendo esta regla</p>
+<ul>
+<li><p>Si el decimal es <strong>mayor o igual</strong> a <strong>5</strong> se redondea hacia arriba, es decir se incrementa en 1 la última cifra deseada.</p>
+</li>
+<li><p>Si el decimal es <strong>menor</strong> a <strong>5</strong> se redondea hacia abajo, es decir la última cifra deseada se deja sin modificar.</p>
+</li>
+</ul>
+<p>Veamos algunos ejemplos:</p>
+<div class="alert alert-block alert-success">
+<b>Ejemplo n°1</b> Supongamos que tenemos el número $4,\underbrace{25}7$, podemos quedarnos por ejemplo con dos decimales, por lo tanto nos tenemos que concentrar en el segundo decimal, el número $5$. Luego teneos que ver si el número que sigue es mayor-igual que cinco o menor, como en este caso es $7$ redondeamos hacia arriba sumando un $1$ al $5$.Por lo cual el número que usamos es :$\boxed{4,26}$
+</div> 
+<div class="alert alert-block alert-success">
+<b>Ejemplo n°2</b> Supongamos ahora que tenemos el número $3,\underbrace{1124}2$, podemos quedarnos por ejemplo con cuatro decimales, por lo tanto nos tenemos que concentrar en el cuarto decimal, el número $4$. Luego teneos que ver si el número que sigue es mayor-igual que cinco o menor, como en este caso es $2$ redondeamos hacia abajo dejando el $4$ como esta.Por lo cual el número que usamos es :$\boxed{3,1124}$
+</div>   
+<div class="alert alert-block alert-success">
+<b>Ejemplo n°3</b> Supongamos ahora que tenemos el número $1,\underbrace{386}5$, podemos quedarnos por ejemplo con tres decimales, por lo tanto nos tenemos que concentrar en el tercer decimal, el número $6$. Luego teneos que ver si el número que sigue es mayor-igual que cinco o menor, como en este caso es $5$ redondeamos hacia rriba sumando un $1$ al $6$.Por lo cual el número que usamos es :$\boxed{1,3874}$
+</div><p><strong>Antes de comenzar no olvide presionar el boton <span style="color:red">Show Widgets</span> para poder ver la animación</strong></p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span><span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;.5f&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">redondeado</span><span class="p">(</span><span class="n">numero</span><span class="p">,</span> <span class="n">cant_decimlaes</span><span class="p">):</span>
+    <span class="n">numero</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">numero</span><span class="o">+</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">cant_decimlaes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;El número redondeado con </span><span class="si">{}</span><span class="s1"> decimales es </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cant_decimlaes</span><span class="p">,</span> <span class="n">numero</span><span class="p">)</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">redondeado</span><span class="p">,</span> <span class="n">numero</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">cant_decimlaes</span><span class="o">=</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3><span style="color:blue">¿Por qué redondear en vez de truncar?<span></h3>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Tabla-de-contenidos">Tabla de contenidos<a class="anchor-link" href="#Tabla-de-contenidos">&#182;</a></h2><h3 id="1-Introducci&#243;n">1 <strong>Introducci&#243;n</strong><a class="anchor-link" href="#1-Introducci&#243;n">&#182;</a></h3><ul>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/introduccion.html">Introducción</a>  </li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/expectativas_de_logro.html">Expectativas de logro</a></li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/Indicadores_de_logro.html">Indicadores de logro</a></li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/Criterios_de_evaluacion.html">Criterios de evaluación</a></li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Introduccion/normativa.html">Normativa</a></li>
-<li><a href="https://drive.google.com/file/d/1g21Igdu0LwUQF7Z-pMbhceYftsqtdDoi/view?usp=sharing">Cronograma 4° 3ra grupo A</a></li>
-</ul>
-<h3 id="2--Mediciones-y-Errores">2  Mediciones y Errores<a class="anchor-link" href="#2--Mediciones-y-Errores">&#182;</a></h3><ul>
-<li><a href="https://nicolasferragamo.github.io/AEA/Mediciones/introduccion.html">Introducción</a>  </li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Mediciones/errores.html">Errores</a>  </li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Mediciones/expresion-medicion.html">Expresión correcta de una medición</a> </li>
-<li><a href="https://nicolasferragamo.github.io/AEA/Mediciones/Propagacon-de-errores.html">Propagación de errores</a>  </li>
-</ul>
-<h3 id="3--Instrumentos">3  Instrumentos<a class="anchor-link" href="#3--Instrumentos">&#182;</a></h3><h3 id="4---Funciones">4   Funciones<a class="anchor-link" href="#4---Funciones">&#182;</a></h3><h3 id="5-Se&#241;ales"><strong>5 Se&#241;ales</strong><a class="anchor-link" href="#5-Se&#241;ales">&#182;</a></h3><h3 id="6-Osciloscopia"><strong>6 Osciloscopia</strong><a class="anchor-link" href="#6-Osciloscopia">&#182;</a></h3><h3 id="7-Electromagnetismo"><strong>7 Electromagnetismo</strong><a class="anchor-link" href="#7-Electromagnetismo">&#182;</a></h3><h3 id="8-Transformadores"><strong>8 Transformadores</strong><a class="anchor-link" href="#8-Transformadores">&#182;</a></h3><h3 id="9-Fuentes-de-alimentaci&#243;n-linealies"><strong>9 Fuentes de alimentaci&#243;n linealies</strong><a class="anchor-link" href="#9-Fuentes-de-alimentaci&#243;n-linealies">&#182;</a></h3><h3 id="10-Semiconductores"><strong>10 Semiconductores</strong><a class="anchor-link" href="#10-Semiconductores">&#182;</a></h3><h3 id="11-Diodos"><strong>11 Diodos</strong><a class="anchor-link" href="#11-Diodos">&#182;</a></h3><h3 id="12-Transistores-en-conmutaci&#243;n"><strong>12 Transistores en conmutaci&#243;n</strong><a class="anchor-link" href="#12-Transistores-en-conmutaci&#243;n">&#182;</a></h3>
+<p><strong>Antes de comenzar no olvide presionar el boton <span style="color:red">Show Widgets</span> para poder ver la animación</strong></p>
+<p>La siguiente animación les ayudará a entender la forma correcta de representar una medida con una sola cifra significativa (solo el primer número distinto de cero en el error absoluto es válido) y redondeando el valor. Esto se verá con mas detalle en la siguiente sección.</p>
+<p>El formato de salida es:</p>
+$$ \boxed{X = X_o \pm \Delta X}$$<p></p>
+<p>Por ejemplo para medición $ X = 4,52 \pm 0,38 $ al tomar una sola cifra significativa despues de la coma (en el error absoluto) y redondeando el número nos queda $\Delta X=0,4$. De forma similar como nuestr medición no puede ser mas precisa que el error que estamos comentiendo debemos también redondiar el valor representativo $X_o$ a un sola cifra significativa quedándonos $X_o = 4,5$. Por lo tanto la medición final se debe escribir como:</p>
+$$ X = 4,5 \pm 0,4 cm $$<p></p>
+<p>Lo que quiere decir que el valor verdadero de la medición se encuentra entre 4,1 y 4,9 cm</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">medicion</span><span class="p">(</span><span class="n">valor_representativo</span><span class="p">,</span> <span class="n">error_absoluto</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">error_absoluto</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> 
+        <span class="n">error_absoluto</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_absoluto</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">valor_representativo</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">valor_representativo</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">error_absoluto</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_absoluto</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">valor_representativo</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">valor_representativo</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;X = </span><span class="si">{}</span><span class="s1"> +/- </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">valor_representativo</span><span class="p">,</span> <span class="n">error_absoluto</span><span class="p">)</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">medicion</span><span class="p">,</span> <span class="n">valor_representativo</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">error_absoluto</span><span class="o">=</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-warning">
+Dadas las siguientes medidas:    
+$$$$      
+$ X_a = 10m \pm \Delta 0,1m$
+$$$$  
+$ X_b = 10Km \pm \Delta 0,01Km$
+$$$$ 
+$ X_c = 1l \pm \Delta 0,01l$
+$$$$ 
+$ X_d = 50mA \pm \Delta 0,1mA$
+$$$$     
+</div>
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">nbi</span><span class="o">.</span><span class="n">multiple_choice</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;¿Cuál es la mas precisa?&quot;</span><span class="p">,</span>
+                    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Xa&#39;</span><span class="p">,</span> <span class="s1">&#39;Xb&#39;</span><span class="p">,</span><span class="s1">&#39;Xc&#39;</span><span class="p">,</span><span class="s1">&#39;Xd&#39;</span><span class="p">],</span>
+                    <span class="n">answers</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="-&#161;Cuidado-no-puede-compara-medidas-en-distintas-unidades!-adem&#225;s-aunque-seguramente-penso-que-cometer-un-error-de-10-metros-significa-que-mi-medida-es-menos-precisa-que-cometer-un-error-de-10-cm-no-tiene-por-que-ser-as&#237;.-Esto-nos-indica-que-el-error-absoluto-no-es-fiable-para-comparar-mediciones-y-necesitamos-otra-herramienta-nueva.-"><span style="color:brown"> &#161;Cuidado no puede compara medidas en distintas unidades! adem&#225;s aunque seguramente penso que cometer un error de 10 metros significa que mi medida es menos precisa que cometer un error de 10 cm no tiene por que ser as&#237;. Esto nos indica que el error absoluto no es fiable para comparar mediciones y necesitamos otra herramienta nueva. </span><a class="anchor-link" href="#-&#161;Cuidado-no-puede-compara-medidas-en-distintas-unidades!-adem&#225;s-aunque-seguramente-penso-que-cometer-un-error-de-10-metros-significa-que-mi-medida-es-menos-precisa-que-cometer-un-error-de-10-cm-no-tiene-por-que-ser-as&#237;.-Esto-nos-indica-que-el-error-absoluto-no-es-fiable-para-comparar-mediciones-y-necesitamos-otra-herramienta-nueva.-">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Referencias">Referencias<a class="anchor-link" href="#Referencias">&#182;</a></h1><ul>
-<li>Electrónica: Teoría de circuitos y dispositivos electrónicos, Robert L. Boylestad, Pearson Prentice Hall.</li>
-<li>Introducción al análisis de circuitos, Boylestad, Pearson Prentice Hall.</li>
-<li>Electrónica analógica, Jose maría Virgili, Juan Molnar.</li>
-<li>Precálculo matemáticas para el cálculo, James Stewart, Lothar Redlin, Saleem Watson, Cengage Learning.</li>
-<li>Circuitos microelectrónicos, Adel S. Sedra, Kenneth C. Smith, Oxford University Press.</li>
-<li>Mediciónes y errores, Cs Básicas - U.D.B. Física, Centro de estudiantes de ingeniería tecnológica.</li>
-<li>Conceptos básicos de la Electrónica Aplicada, Esteban Lemos.</li>
-</ul>
+<h3><span style="color:red">Error Relativo:<span></h3>
+<p>El <strong>error relativo</strong> viene a solucionar el problema que se nos presento ya que al no tener unidades, me permite comparar mediciones de distintas magnitudes y contempla en él, la proporción que afecta a la medición el error cometido. Es el error mas útil.</p>
+<div class="alert alert-block alert-info">
+<b> Error relativo:</b> Es la relación proporcional entre el valor representativo $X_o$ y el error absoluto $\Delta X$. <b> Es adimensional</b>
 
+Se representa con la letra griega épsilon $\epsilon_r$
+
+$$$$      
+$$ \boxed{ \epsilon_r = \frac{\Delta X}{X_o}} $$ 
+
+Donde: 
+$$$$      
+$X_o$ es el valor representativo de la medición.
+$$$$     
+$\Delta X$ es el error absoluto de la medición.
+$$$$         
+</div><h3><span style="color:red">Error Relativo porcentual:<span></h3>
+<div class="alert alert-block alert-info">    
+<b> Error relativo porcentual:</b> Es la relación porcentual entre el valor representativo $X_o$ y el error absoluto $\Delta X$ . 
+
+Se representa con la letra griega épsilon $\epsilon_r$ 
+
+$$$$      
+$$ \boxed{ \epsilon_{r\%} = \frac{\Delta X}{X_o} *100 \%} $$ 
+$$$$       
+$$ \boxed{ \epsilon_{r\%} = \epsilon_r *100 \%} $$     
+Donde: 
+$$$$      
+$X_o$ es el valor representativo de la medición.
+$$$$     
+$\Delta X$ es el error absoluto de la medición.
+$$$$     
+</div><p>Probablemente conozca al <strong>error relativo porcentual</strong> como <strong>tolerancia</strong></p>
+<h3 id="-Cuidado-con-ponerle-unidades,-el-error-relativo-es-**adimencional**-lo-que-nos-permite-comparar-medidas-de-distintas-magnitudes.-"><span style="color:brown"> Cuidado con ponerle unidades, el error relativo es **adimencional** lo que nos permite comparar medidas de distintas magnitudes. </span><a class="anchor-link" href="#-Cuidado-con-ponerle-unidades,-el-error-relativo-es-**adimencional**-lo-que-nos-permite-comparar-medidas-de-distintas-magnitudes.-">&#182;</a></h3><div class="alert alert-block alert-success">    
+<b> Ejemplo 2:</b> Contestemos ahora la pregunta que planteamos mas arriba.  Para ello vamos a calcular el <b> error relativo </b> de cada medición.
+
+
+Se representa con la letra griega épsilon $\epsilon_r$ 
+
+$$$$ 
+
+$ \epsilon_r = \frac{0,1 m}{10 m} = 0,01 \Rightarrow \epsilon_{r\%} = 1 \%$
+
+$$$$       
+$ \epsilon_r = \frac{0,01 Km}{10 Km} = 0,001 \Rightarrow  \epsilon_{r\%}= 0,1 \%$   
+
+$$$$      
+$\epsilon_r = \frac{0,01 l}{1 l} = 0,01 \Rightarrow  \epsilon_{r\%} = 1 \% $
+
+$$$$     
+$\epsilon_r = \frac{50 mA}{0,1 mA} = 0,002 \Rightarrow \epsilon_{r\%} = 0,2 \%$ 
+
+</div><p>Por lo tanto podemos notar que la medida a y c poseen la misma precisión, mientras que la mas precisa es la medida b seguida de la d.</p>
+<div class="alert alert-block alert-success">    
+<b> Ejemplo 3:</b> Dada una resistencia de 100 $\Omega$ con una tolerancia de 5 $\%$ obtener $R_{mín}, R_{máx}$ y escriba la medición de forma estandar.
+
+
+Recordemos que la tolerancia es el valor del <b>error relativo porcentual</b>, por lo cual si lo dividimos por 100 obtenemso el $\epsilon_r$ .
+$$$$       
+$$ \epsilon_r = \frac{\epsilon_{r \%}}{100} = \frac{5}{100} = 0,05 $$    
+
+despejando de la ecuación de error relativo nos queda  
+$$$$     
+$$ \Delta R = \epsilon_{r} * R_o = 0,05 * 100 = 5 $$  
+$$$$  
+
+$$ R_{min} = R_o - \Delta R = 100 - 5 = 95$$   
+
+$$ R_{máx} = R_o + \Delta R = 100 + 5 = 105$$      
+$$$$      
+Por último la medición se escribe:
+$$$$     
+
+$$ \boxed{R = 100 \pm 5 \Omega}$$
+
+</div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Autor">Autor<a class="anchor-link" href="#Autor">&#182;</a></h1><p>Nicolás Ferragamo</p>
+<div class="alert alert-block alert-danger">    
+<b> Ejercicio:</b> Suponga una resistencia con una tolerancia de 1 $\%$, que tiene un valor nominal de 10 K$\Omega$ y al realizar su medición da como resultado un valor de 9991 $\Omega$. Sin tener en cuenta los errores de medición responda:    
+</div>
+</div>
+</div>
+</div>
 
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">nbi</span><span class="o">.</span><span class="n">short_answer</span><span class="p">(</span><span class="s1">&#39;¿Cuál es el error absoluto de fabricación de la resistencia?. Escriba el número&#39;</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;9&#39;</span><span class="p">,</span>
+                  <span class="n">explanation</span><span class="o">=</span><span class="s1">&#39;|Ri - Rv|= |9991- 10000| = 9 Ohms&#39;</span> <span class="p">)</span>
+
+<span class="n">nbi</span><span class="o">.</span><span class="n">short_answer</span><span class="p">(</span><span class="s1">&#39;¿Cuál es el error relativo?. Escriba el número con &quot;,&quot; como punto decimal&#39;</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;0,0009&#39;</span><span class="p">,</span>
+                  <span class="n">explanation</span><span class="o">=</span><span class="s1">&#39;e = error_absoluto/Ro = 9/10000 = 0,0009&#39;</span> <span class="p">)</span>
+
+<span class="n">nbi</span><span class="o">.</span><span class="n">short_answer</span><span class="p">(</span><span class="s1">&#39;¿Cuál es el error relativo porcential?. Escriba el número con &quot;,&quot; como punto decimal y sin el simbolo de &quot;%&quot;&#39;</span><span class="p">,</span> <span class="n">answers</span><span class="o">=</span><span class="s1">&#39;0,09&#39;</span><span class="p">,</span>
+                  <span class="n">explanation</span><span class="o">=</span><span class="s1">&#39;er% = er *100% = 0,09%&#39;</span> <span class="p">)</span>
+
+<span class="n">nbi</span><span class="o">.</span><span class="n">multiple_choice</span><span class="p">(</span><span class="n">question</span><span class="o">=</span><span class="s2">&quot;¿Se encuentra el valor de resistencia dentro de los valores indicados por el fabricante ?&quot;</span><span class="p">,</span>
+                    <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;si&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;no lo puedo saver&#39;</span><span class="p">],</span>
+                    <span class="n">answers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<form method="get" action="https://nicolasferragamo.github.io/AEA/index.html">
+ <button type="submit">Inicio
+</form>
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/errores.html">
+ <button type="submit">Anterior
+</form> 
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/.html">
+ <button type="submit">Siguietne
+</form>
 </div>
 </div>
 </div>

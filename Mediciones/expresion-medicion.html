@@ -13331,16 +13331,16 @@ $$ \boxed{Error_{máx} = 1,5 - 1,0 = 1,45}=0,05 $$
     <span class="n">numeros</span> <span class="o">=</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">Nexp</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nexp</span><span class="p">):</span>
-        <span class="n">sum_num</span>       <span class="o">=</span> <span class="n">sum_num</span> <span class="o">+</span> <span class="n">numeros</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">sum_truncate</span>  <span class="o">=</span> <span class="n">truncate</span><span class="p">(</span><span class="n">sum_truncate</span> <span class="o">+</span> <span class="n">numeros</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">sum_redondeo</span> <span class="o">=</span> <span class="n">sum_redondeo</span><span class="o">+</span> <span class="nb">round</span><span class="p">(</span><span class="n">numeros</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span> 
+        <span class="n">sum_num</span>      <span class="o">+=</span> <span class="n">numeros</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">sum_truncate</span> <span class="o">+=</span> <span class="n">truncate</span><span class="p">(</span> <span class="n">numeros</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">sum_redondeo</span> <span class="o">+=</span> <span class="nb">round</span><span class="p">(</span><span class="n">numeros</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span> 
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Comprobación mediante truncamiento y redondeo de 3 decimales&#39;</span><span class="p">)</span>    
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La suma original es = &#39;</span><span class="p">,</span> <span class="n">sum_num</span><span class="p">)</span>    
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La suma con valores truncados a 3 decimales es = &#39;</span><span class="p">,</span> <span class="n">sum_truncate</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La suma con valores truncados a 3 decimales es = &#39;</span><span class="p">,</span> <span class="n">truncate</span><span class="p">(</span><span class="n">sum_truncate</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error cometido al truncar es = &#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">sum_num</span> <span class="o">-</span> <span class="n">sum_truncate</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La suma con valores redondeados a 3 decimales es = &#39;</span><span class="p">,</span> <span class="n">sum_redondeo</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error cometido al redondear es = &#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">sum_num</span> <span class="o">-</span> <span class="n">sum_redondeo</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La suma con valores redondeados a 3 decimales es = &#39;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">sum_redondeo</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error cometido al redondear es = &#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">sum_num</span> <span class="o">-</span> <span class="n">sum_redondeo</span><span class="p">)))</span>
     <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
 <span class="n">interact</span><span class="p">(</span><span class="n">ejemplo</span><span class="p">,</span> <span class="n">Nexp</span><span class="o">=</span><span class="n">a</span><span class="p">);</span>
@@ -13374,7 +13374,7 @@ $$ \boxed{Error_{máx} = 1,5 - 1,0 = 1,45}=0,05 $$
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>De la simulación podemos notar que mientras mas operaciones, en este caso sumas, se realizan mayor es el error cometedio, veremos en la siguiente sección que para el caso de multiplicaciones y potencia el error se acrecienta. Por lo cual simepre tenemos que <strong>redondear nunca truncar</strong></p>
+<p>De la simulación podemos notar que mientras mas operaciones, en este caso sumas, se realizan mayor es el error cometedio, veremos en la siguiente sección que para el caso de multiplicaciones y potencia el error se acrecienta. Por lo cual simepre tenemos que <strong><em>redondear</em> nunca <em>truncar</em></strong></p>
 
 </div>
 </div>
@@ -13472,14 +13472,55 @@ No es lo mismo $3,70 m$ que $3,7 m$. En el primer caso queremos decir que se ha 
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2><span style="color:blue">Cifras significativas<span></h2>
 <p>Un instrumento de medida debería tener el error en el último dígito que es capaz de medir.</p>
 <div class="alert alert-block alert-success">     
 <b>Ejemplo n°4:</b> 
 Cuando realizamos una medición con una regla milimetrada, podremos 
+</div><p>La siguiente animación les ayudará a entender la forma correcta de representar una medida con una sola cifra significativa (solo el primer número distinto de cero en el error absoluto es válido) y redondeando el valor. Esto se verá con mas detalle en la siguiente sección.</p>
+<p>El formato de salida es:</p>
+<p>𝑋=𝑋𝑜±Δ𝑋</p>
+<p>Por ejemplo para medición 𝑋=4,52±0,38
+al tomar una sola cifra significativa despues de la coma (en el error absoluto) y redondeando el número nos queda Δ𝑋=0,4. De forma similar como nuestr medición no puede ser mas precisa que el error que estamos comentiendo debemos también redondiar el valor representativo 𝑋𝑜 a un sola cifra significativa quedándonos 𝑋𝑜=4,5</p>
+<p>. Por lo tanto la medición final se debe escribir como:</p>
+<p>𝑋=4,5±0,4𝑐𝑚</p>
+<p>Lo que quiere decir que el valor verdadero de la medición se encuentra entre 4,1 y 4,9 cm</p>
+
 </div>
 </div>
 </div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">medicion</span><span class="p">(</span><span class="n">valor_representativo</span><span class="p">,</span> <span class="n">error_absoluto</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">error_absoluto</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> 
+        <span class="n">error_absoluto</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_absoluto</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">valor_representativo</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">valor_representativo</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">error_absoluto</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">error_absoluto</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">valor_representativo</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">valor_representativo</span><span class="o">+</span><span class="mf">0.01</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;X = </span><span class="si">{}</span><span class="s1"> +/- </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">valor_representativo</span><span class="p">,</span> <span class="n">error_absoluto</span><span class="p">)</span>
+
+<span class="n">interact</span><span class="p">(</span><span class="n">medicion</span><span class="p">,</span> <span class="n">valor_representativo</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">error_absoluto</span><span class="o">=</span><span class="n">b</span><span class="p">);</span>
+</pre></div>
+
+    </div>
 </div>
+</div>
+
+  </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <form method="get" action="https://nicolasferragamo.github.io/AEA/index.html">
@@ -13489,7 +13530,7 @@ Cuando realizamos una medición con una regla milimetrada, podremos
  <button type="submit">Anterior
 </form> 
 <form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/.html">
- <button type="submit">Siguietne
+ <button type="submit">Siguiente
 </form>
 </div>
 </div>

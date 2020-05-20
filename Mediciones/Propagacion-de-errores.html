@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 
 
-<title>clasificacion-de-mediciones</title>
+<title>Propagacion-de-errores</title>
 
 <style type="text/css">
     /*!
@@ -13130,6 +13130,9 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">savefig</span>
+<span class="kn">import</span> <span class="nn">sys</span> 
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/nico/.local/lib/python3.8/site-packages&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lcapy</span> <span class="kn">import</span> <span class="n">Circuit</span>
 </pre></div>
 
     </div>
@@ -13139,46 +13142,450 @@ div#notebook {
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1><span style="color:blue"> Comparación de mediciones <span></h1>
-<p>Tal vez puedan pensar que comparar medidas sea un tema trivial, pero no lo es tanto. En primer lugar tenemos que comparar la misma magnitud y en la misma unidad, es una obviedad pero no esta de mas recordarlo.</p>
-<p>Lo que comparamos son la misma magnitud que se mide con distintos métodos, o por distintos observadores para poder saber si estas son iguales o distintas. Al hacer esto se dan 3 casos posibles que tenemos que entender para no llegar a conclusiones equivocadas.</p>
-<p>Recordemos que toda medida se representa como un intervalo de indeterminación, dada por la expresión $X = X_o \pm \Delta X$</p>
-<p>(Para los gráficos se utilizan los mismos intervalos de indeterminación y con la misma escala en ejes paralelos.)</p>
-<h3><span style="color:red">Caso a:<span></h3>
-<p>En el primer caso si miramos el gráfico podemos observar que los intervalos se superponen (tienen puntos en común) por lo cual podemos decir que ambas mediciones son <strong>iguales</strong></p>
-<p><img src="Imagenes/a.png" width="600" height="360"></p>
-<div class="alert alert-block alert-info">
-<b>Matemáticamente esto se escribe como:  </b> 
-$$ \boxed{ | X_{01} - X_{02}| < |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 = X_2} $$
-</div><h3><span style="color:red">Caso b:<span></h3>
-<p>En este caso al mirar el gráfico podemos observar que los intervalos no se superponen (no tienen puntos en común) por lo cual podemos decir que ambas mediciones son <strong>distintas</strong></p>
-<p><img src="Imagenes/b.png" width="600" height="360"></p>
-<div class="alert alert-block alert-info">
-<b>Matemáticamente esto se escribe como:  </b> 
-$$ \boxed{ | X_{01} - X_{02}| > |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 \neq X_2} $$
-</div><h3><span style="color:red">Caso c:<span></h3>
-<p>Este es el caso mas difícil. Podemos observar que los intervalos solo tienen un punto en común, por lo cual no conviene tomar ninguna decisión. Lo mejor es realizar medidas nuevas para ver si estamos en el caso a o en el b.</p>
-<p><img src="Imagenes/c.png" width="600" height="360"></p>
+<h1 id="-Propagaci&#243;n-de-errores-"><span style="color:blue"> Propagaci&#243;n de errores </span><a class="anchor-link" href="#-Propagaci&#243;n-de-errores-">&#182;</a></h1><p>Acabamos de ver que para las medidas indirectas tenemos que aplicar algo llamado <strong>propagación de errores</strong>. Esto se basa en conceptos matemáticos un poco avanzados, aunque muy interesantes. Por tal motivo solamente vamos a ver las conclusiones que nos permitan aplicarlo y alguna demostración sencilla para entender mejor el tema.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1><span style="color:blue"> Clasificación de mediciones <span></h1>
-<p>Las medidas pueden clasificarse en:</p>
+<h2 id="Propagaci&#243;n-de-errores-en-la-suma-"><span style="color:red">Propagaci&#243;n de errores en la suma </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-la-suma-">&#182;</a></h2><p>Imagínese que debemos obtener la resistencia total de un circuito compuesto por 2 resistores en serie.  El problema es que no tenemos un instrumento para medirlo pero sí tenemos los valores de cada una. $R_1 = R_{o1} \pm \Delta R_{o1}$ y $R_2 = R_{o2} \pm \Delta R_{o2}$ por lo cual tendremos que utilizar la ecuación  $R_T = R_1 + R_2$. ¿Pero como tenemos en cuenta los errores de cada medida?</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">cct</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">()</span> 
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;BAT 1 0 ;down&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R1 1 2;right=2&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R2 2 3  ; down&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 3 0; left&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">label_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">draw_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+width=310
+height=133
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-info">
+Para obtener el valor de la suma 
+$$S = a + b$$:
+$$$$    
+$$S = S_o \pm \Delta S$$   
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\boxed{S_o = a_o + b_o}$$       
+y su error es 
+$$$$
+$$\boxed{\Delta S = \Delta a + \Delta b}$$         
+$$$$
+$$ \boxed{\epsilon_S = \frac{\Delta S}{S_o} = \frac{\Delta a + \Delta b}{a_o + b_o}}$$
+$$$$    
+Donde <b>a</b> y <b>b</b> son las medidas que queremos sumar
+$$$$    
+<b> Esto es válido para todas las sumas, no esta limitado a 2. </b>    
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+<b>Veamos el ejemplo #1</b> supongamos los siguientes valores $R_1 = 26,7 \pm 1,4 \Omega$ y $R_2 = 57,3 \pm 2,9.\Omega$ Aplicando lo visto obtenemos:
+$$$$    
+$$R_{oT} = 26,7 + 57,3 = 84 \Omega$$
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\Delta R_T = 1,4 + 2,9 = 4,3 \Omega$$        
+y su error es 
+$$$$
+$$R_T = 84 \pm 4 \Omega$$   
+$$$$
+Recordemos que el <b>8</b> es una cifra exacta y el <b>4</b> no.
+</div>
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">cct</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">()</span> 
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;BAT 1 0 ;down, l={10\,V}&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R1 1 2 ; right=2, l={26.7 +/- 1.4\,Omhs}&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R2 2 3 ; down, l={57.3 +/- 2.9\,Omhs}&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 3 0; left&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">label_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">draw_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+width=452
+height=133
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Propagaci&#243;n-de-errores-en-la-suma-demostraci&#243;n-(opcional)-"><span style="color:red">Propagaci&#243;n de errores en la suma demostraci&#243;n (opcional) </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-la-suma-demostraci&#243;n-(opcional)-">&#182;</a></h3><p>En este apartado vamos a ver la demostración que justifica este cálculo, su lectura es optativa aunque recomendable si quiere entender el por que podemos utilizar esas ecuaciones.</p>
+<p>Empecemos planteando 2 medidas diferentes que queremos sumar:</p>
+<p>$a = a_0 \pm \Delta a$  y  $b = b_0 \pm \Delta b$</p>
+<p>Sabemos que</p>
+<p>$a_o = \frac{a_M + a_m}{2}$ y $\Delta a = \frac{a_M - a_m}{2}$</p>
+<p>$b_o = \frac{b_M + b_m}{2}$ y $\Delta b = \frac{b_M - b_m}{2}$</p>
+<p>donde la letra <strong>M</strong> representa al valor máximo de la medición y <strong>m</strong> al valor mínimo.</p>
+<p>por lo cual</p>
+<p>$a_m = a_o - \Delta a$ y $a_M = a_o + \Delta a$</p>
+<p>$b_m = b_o - \Delta b$ y $b_M = b_o + \Delta b$</p>
+<p>Realizando la suma, dada la expresión:</p>
+<p>$S = a + b$</p>
+<p>deseamos obtener</p>
+<p>$S = S_o\pm \Delta S$</p>
+<p>Al igual que planteamos en las medidas de <strong>a</strong> y <strong>b</strong> podemos hacerlo con <strong>S</strong>, por lo cual tenemos</p>
+<p>$S_o = \frac{S_M + S_m}{2}$ y $\Delta S = \frac{S_M - S_m}{2}$</p>
+<p>Es sencillo darse cuenta que el valor mas pequeño de <strong>S</strong> ($S_m$) lo obtendremos al sumar los valores mas pequeños de <strong>a</strong> ($a_m$) y <strong>b</strong> ($b_m$) y lo mismo para <strong>S_M</strong>, por lo cual podemos escribir:</p>
+<p>$S_m = a_m + b_m$ y $S_M = a_M + b_M$</p>
+<p>Por lo cuál podemos escribir:</p>
+$$S_o = \frac{(a_o - \Delta a + b_o - \Delta b)+ (a_o + \Delta a + b_o + \Delta b)}{2}$$<p>Operando podemos notar que los errores se canselan quedando</p>
+$$S_o = \frac{2a_o + 2b_o}{2}$$$$ \boxed {S_o = a_o + b_o}$$<p>De la misma forma</p>
+$$\Delta S = \frac{(a_o + \Delta a + b_o + \Delta b) - (a_o - \Delta a + b_o - \Delta b)}{2}$$$$ \Delta S = \frac{2\Delta a + 2\Delta b}{2}$$$$ \boxed {\Delta S = \Delta a + \Delta b}$$<p>Por último el error relativo queda</p>
+$$ \boxed{\epsilon_s = \frac{\Delta S}{S_o} = \frac{\Delta a + \Delta b}{a_o + b_o}}$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Propagaci&#243;n-de-errores-en-la-Resta-"><span style="color:red">Propagaci&#243;n de errores en la Resta </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-la-Resta-">&#182;</a></h2><div class="alert alert-block alert-info">
+Para obtener el valor de la resta:
+$$R = a + b$$:    
+$$$$    
+$$R = R_o \pm \Delta R$$   
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\boxed{R_o = a_o - b_o}$$       
+y su error es 
+$$$$
+$$\boxed{\Delta R = \Delta a + \Delta b}$$         
+$$$$
+$$ \boxed{\epsilon_R = \frac{\Delta S}{S_o} = \frac{\Delta a + \Delta b}{a_o - b_o}}$$
+$$$$    
+Donde <b>a</b> y <b>b</b> son las medidas que queremos restar
+$$$$    
+<b> Esto es válido para todas las restas, no esta limitado a 2. </b>    
+</div><h3 id="Es-importante-notar-que-los-errores-absolutos-($\Delta$,-en-la-resta,-tambi&#233;n-se-suman-y-no-se-restan.-Esto-tal-vez-le-parezca-extra&#241;o-pero-piense-que-los-errores-ya-est&#225;n-cometidos-en-cada-medici&#243;n-y-al-manipularlos-en-una-operaci&#243;n-matem&#225;tica-estos-no-pueden-reducirse-sino-aumentar-al-combinar-los-errores-de-ambas-mediciones.-"><span style="color:brown">Es importante notar que los errores absolutos ($\Delta$, en la resta, tambi&#233;n se suman y no se restan. Esto tal vez le parezca extra&#241;o pero piense que los errores ya est&#225;n cometidos en cada medici&#243;n y al manipularlos en una operaci&#243;n matem&#225;tica estos no pueden reducirse sino aumentar al combinar los errores de ambas mediciones. </span><a class="anchor-link" href="#Es-importante-notar-que-los-errores-absolutos-($\Delta$,-en-la-resta,-tambi&#233;n-se-suman-y-no-se-restan.-Esto-tal-vez-le-parezca-extra&#241;o-pero-piense-que-los-errores-ya-est&#225;n-cometidos-en-cada-medici&#243;n-y-al-manipularlos-en-una-operaci&#243;n-matem&#225;tica-estos-no-pueden-reducirse-sino-aumentar-al-combinar-los-errores-de-ambas-mediciones.-">&#182;</a></h3><p>La demostración de esto quedará para el anexo.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Propagaci&#243;n-de-errores-en-el-producto-"><span style="color:red">Propagaci&#243;n de errores en el producto </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-el-producto-">&#182;</a></h2><div class="alert alert-block alert-info">
+Para obtener el valor de la multiplicación:
+$$P = a * b$$:    
+$$$$    
+$$P = P_o \pm \Delta P$$   
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\boxed{P_o = a_o * b_o}$$       
+y su error es 
+$$$$
+$$\boxed{\epsilon_P = \epsilon_a + \epsilon_b}$$         
+$$$$    
+Donde <b>a</b> y <b>b</b> son las medidas que queremos multiplicar
+$$$$    
+<b> Esto es válido para todas las multiplicaciones, no esta limitado a 2. </b>    
+</div><h3 id="Es-importante-notar-que-los-errores-que-en-este-caso-usamos-la-suma-del-error-relativo-y-no-del-error-absoluto.-"><span style="color:brown">Es importante notar que los errores que en este caso usamos la suma del error relativo y no del error absoluto. </span><a class="anchor-link" href="#Es-importante-notar-que-los-errores-que-en-este-caso-usamos-la-suma-del-error-relativo-y-no-del-error-absoluto.-">&#182;</a></h3><p>La demostración de esto quedará para el anexo.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Propagaci&#243;n-de-errores-en-el-cociente-"><span style="color:red">Propagaci&#243;n de errores en el cociente </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-el-cociente-">&#182;</a></h2><div class="alert alert-block alert-info">
+Para obtener el valor del cociente:
+$$C = a * b$$:    
+$$$$    
+$$C = C_o \pm \Delta C$$   
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\boxed{C_o = a_o * b_o}$$       
+y su error es 
+$$$$
+$$\boxed{\epsilon_C = \epsilon_a + \epsilon_b}$$         
+$$$$    
+Donde <b>a</b> y <b>b</b> son las medidas que queremos dividir
+$$$$    
+<b> Esto es válido para todas las divisiones, no esta limitado a 2. </b>    
+</div><h3 id="Es-importante-notar-que-al-igual-que-el-caso-anterior-los-errores-que-se-suman-son-los-relativos.-"><span style="color:brown">Es importante notar que al igual que el caso anterior los errores que se suman son los relativos. </span><a class="anchor-link" href="#Es-importante-notar-que-al-igual-que-el-caso-anterior-los-errores-que-se-suman-son-los-relativos.-">&#182;</a></h3><p>La demostración de esto quedará para el anexo.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Propagaci&#243;n-de-errores-en-la-potenciaci&#243;n-"><span style="color:red">Propagaci&#243;n de errores en la potenciaci&#243;n </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-la-potenciaci&#243;n-">&#182;</a></h2><div class="alert alert-block alert-info">
+Para obtener el valor de la potenciación:
+$$M = a^n$$:    
+$$$$    
+$$M = M_o \pm \Delta M$$   
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\boxed{M_o = a_o^n}$$       
+y su error es 
+$$$$
+$$\boxed{\epsilon_M = n * \epsilon_a }$$         
+$$$$    
+Donde <b>a</b> es la base y <b>n</b> el exponente un número entero.
+$$$$      
+</div><h3 id="Es-importante-notar-que-los-errores-que-en-este-caso-usamos-la-multiplicaci&#243;n-del-error-relativo-ya-que-lo-que-hacemos-es-sumar-n-veces-el-error-relativo-de-a.-"><span style="color:brown">Es importante notar que los errores que en este caso usamos la multiplicaci&#243;n del error relativo ya que lo que hacemos es sumar n veces el error relativo de a. </span><a class="anchor-link" href="#Es-importante-notar-que-los-errores-que-en-este-caso-usamos-la-multiplicaci&#243;n-del-error-relativo-ya-que-lo-que-hacemos-es-sumar-n-veces-el-error-relativo-de-a.-">&#182;</a></h3><p>La demostración de esto quedará para el anexo.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Propagaci&#243;n-de-errores-en-la-radicaci&#243;n-"><span style="color:red">Propagaci&#243;n de errores en la radicaci&#243;n </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-la-radicaci&#243;n-">&#182;</a></h2><div class="alert alert-block alert-info">
+Para obtener el valor de la radicación:
+$$N = \sqrt[n]{a}$$:    
+$$$$    
+$$M = M_o \pm \Delta M$$   
+$$$$    
+Usamos las ecuaciones 
+$$$$
+$$\boxed{N_o = \sqrt[n]{a_o}}$$       
+y su error es 
+$$$$
+$$\boxed{\epsilon_N = \frac{\epsilon_a}{n} }$$         
+$$$$    
+Donde <b>a</b> es la base y <b>n</b> el exponente de la raíz, un número entero.
+$$$$      
+</div><h3 id="Es-importante-notar-que-los-errores-que-en-este-caso-usamos-la-divisi&#243;n-del-error-relativo.-"><span style="color:brown">Es importante notar que los errores que en este caso usamos la divisi&#243;n del error relativo. </span><a class="anchor-link" href="#Es-importante-notar-que-los-errores-que-en-este-caso-usamos-la-divisi&#243;n-del-error-relativo.-">&#182;</a></h3><p>La demostración de esto quedará para el anexo.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Esto es mas que suficiente para las situaciones que se nos pueden presentar. Solo resta mencionar 2 casos especiales.</p>
 <ul>
-<li><p><strong>Mediciones directas:</strong> son aquellas magnitudes que se miden una única vez.</p>
+<li><p><b>Las constantes no tienen errores esto incluye a todos los números racionales. Por ejemplo el número el número 4,5 = $\frac{9}{2}$ </b></p>
 </li>
-<li><p><strong>Mediciones indirectas:</strong> son aquellas en las cuales para obtener una magnitud hay que realizar varias magnitudes y utilizar una expresión matemática para obtenerla.</p>
+<li><p><b>Los números irracionales tienen errores por no poder usar sus infinitos decimales. Por ejemplo $\pi = 3,14159265...$ </b></p>
 </li>
 </ul>
-<h2><span style="color:red">Mediciones directas:<span></h2>
-<p>En primer lugar quiero aclarar que el campo de la estadística es muy importante en las mediciones, ya que toda medición tiene múltiples factores a considerar. Por lo cual lo que hay que hacer es un tratamiento estadístico de errores en las mediciones. Como esto escapa por mucho el alcance de la materia solo mencionare algunas cosas puntuales a fines informativos solamente.</p>
-<p>Como mencione anteriormente, las medidas directas son aquellas en la cual la magnitud se obtiene con una sola medición. Por ejemplo puedo determinar el largo de una mesa midiendo con una cinta métrica su longitud. Por otro lado si quisiera medir su área (suponiendo que es de forma rectangular) tendría que medir su largo y su ancho y por último utilizar una forma matemática A = l x h para obtenerla, por lo cual su obtención es de forma indirecta.</p>
-<p>Vimos que uno de los tipos de errores son los aleatorios o causales y que los mismos varían de forma aleatoria. Esto nos indica que no podemos encontrar una ecuación matemática que los defina para cada medición, pero por medio de la estadística podemos conocer ciertas cosas que nos permitan disminuir sus efectos en las mediciones.</p>
-<p>Si bien como mencione, no vamos a entrar en detalle, si vamos a tratar de entender la idea que lo rodea. Piense en esto al lanzar una moneda puede obtener como resultado una <strong>cara</strong> o una <strong>ceca</strong> (se escribe con c cuando hablamos de monedas). Cunado lance la moneda aveces le tocara cara y otras veces ceca. Suponga que cuando sale cara usted gana 1 peso y cuando sale ceca usted pierde 1 peso. ¿ Puede decirme cuanto dinero puede esperar tener luego de un par de lanzamientos?. Claro esta que queremos que nos toque cara, pero puede tocarnos cualquiera de los  dos. Si tiramos 10 veces la moneda como son igualmente probables esperaríamos que salga 5 y 5, por lo cual tendríamos el mismo dinero que al principio. Intente realizar el experimento en su casa y vera que tal vez obtenga 5 caras y cinco cecas pero también puede tener mas caras que cecas y viceversa. Sin embargo es muy poco probable que le toquen 10 caras y ninguna ceca. (Los casinos saben de estadística por eso ganan dinero.)</p>
-<p>Para que no se canse al lanzar tantas veces la moneda, le dejo acá una aplicación que hace este experimento la cantidad de veces que usted quiera para que vea los resultados. Notará que al mayor cantidad de veces que lo realice el resultado final estará mas cerca de 0 que de 1 o -1. Utilizaremos la letra <strong>S</strong> para representar la <strong>ceca</strong> para no confundirla con la <strong>C</strong> de <strong>cara</strong>.</p>
+<p>Veamos algunos ejemplos que muestren como trabajar con estas herramientas.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+<b>Ejemplo #1</b> Se quiere determinar el volumen de un prisma de base cuadrada. Al medir un lado de la base se obtuvo $l = 0,50cm \pm 0,02cm$ y su altura $h = 1,71 cm \pm 0,02cm$
+$$$$      
+Como saben la fórmula del volumen es $V = l^2 * h$
+$$$$
+Podemos ver que tenemos 2 casos distintos una **multiplicación** y una **potencia** a la que le tenemos que propagar el error para ello utilicemos lo que vimos.
+$$$$
+Como no tenemos ninguna suma ni resta, debemos trabajar con el error relativo en todos los casos.
+$$$$
+Lo primero que hacemos es obtener el valor de $V_o$ que lo obtenemos al aplicar en la fórmula los valores representativos.
+$$$$    
+$$V_o = l_o^2 * h_o = 0,5^2 * 1,71 = 0,4275 cm$$
+$$$$    
+$$\boxed{V_o = 0,4475 cm}$$    
+$$$$
+Por otro lado nos encargamos de los errores, en primer lugar calculemos los errores relativos de cada caso. En el caso de la potencia tenemos que aplicar la fórmula:
+$$$$
+$$\epsilon_A = n * \epsilon_l = 2 * \frac{\Delta l}{l_o}= 2 * \frac{0,02cm}{0,5cm}= 0,08 $$  
+$$$$    
+$$\boxed{\epsilon_A = 0,08}$$   
+$$$$
+El error relativo de la altura es:    
+$$\epsilon_h = \frac{\Delta h}{h_o}= \frac{0,02cm}{1,71cm}= 0,0117 $$   
+$$$$    
+$$\boxed{\epsilon_h = 0,01}$$   
+$$$$    
+Como lo que nos queda es multiplicar ambos valores, lo que debemos hacer es sumar los errores relativos para obtener el error relativo del volumen.
+$$$$
+$$\epsilon_V = \epsilon_A + \epsilon_h = 0,08 + 0,0117 = 0,0917$$ 
+$$$$    
+$$\boxed{\epsilon_V =0,0917}$$        
+$$$$
+Ya para finalizar lo que tenemos que hacer es obtener el valor de $\Delta V$ para poder presentar la medida
+$$$$
+$$\Delta V = \epsilon_V * V_o = 0,0917 * 0,4275 = 0,0392cm$$
+$$$$    
+$$ \boxed{\Delta V = 0,04455 cm} $$   
+$$$$
+$$ \boxed{V = 0,43 \pm 0,04 cm}$$    
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+<b>Ejemplo #2</b> Se desea conocer el área de un cuadrado de aproximadamente 10 cm de lado con una indeterminación no superior al 1%. Con esta información determine que instrumento utilizar. 
+$$$$      
+Como saben la fórmula del área es $A = l^2 $ y lo que queremos determinar es el valor de $\Delta l$ para seleccionar el instrumento adecuado que nos garantice esa precisión.
+$$$$
+Sabemos por dato del problema que $\epsilon_A = 0,01$ 
+$$$$
+También sabemos que al tratarse de una potencia $\epsilon_A = 2*\epsilon_l=0,01$ y despejando nos queda $\epsilon_l = 0,005$ por lo cual 
+$$$$
+$$ \epsilon_l = \frac{\Delta l}{l_o} \Rightarrow \Delta l = a_o * \epsilon_l = 10cm * 0,005 = 0,5mm $$
+$$$$
+$$\boxed{\Delta l \leq 0,5 mm}$$   
+$$$$    
+Esto nos indica que tenemos que utilizar un instrumento que cometa un error menor a eso. Podemos usar una regla ya que su indeterminación es la mitad de 1mm = 0,5mm ya que un ojo entrenado puede distinguirlo. También podríamos usar instrumentos mas precisos como un calibre.    
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+<b>Ejemplo #3</b> Si en la determinación del volumen de un prisma de base cuadrada se ha medido el lado de la base, habiéndose obtenido $a = 0,50cm \pm 0,02cm$ y se dispone de varios instrumentos con los cuales se puede medir la altura. Determine un criterio para decidir que instrumento utilizar.
+$$$$      
+Es un ejercicio muy similar al del ejemplo 1. Por lo cual lo vamos a utilizar como base. La forma de determinar el error relativo como explicamos antes es: 
+$$$$    
+$$\epsilon_V = 2 * \frac{\Delta a}{a_o} + \frac{\Delta h}{h_o}$$   
+$$$$
+Sabemos que  
+$$\epsilon_V = 2 * \frac{0,02}{0,5} + \frac{\Delta h}{h_o}$$   
+$$$$
+$$\epsilon_V = 0,08 + \frac{\Delta h}{h_o}$$
+$$$$
+Lo importante es encontrar un criterio adecuado para que el error de la altura no afecte al error global o que al menos sea lo menos relevante posible. Hasta ahora sabemos que partimos de un error relativo de 0,08. Un criterio que podemos tomar es que el erro a averiguar sea menor o a lo sumo del mismo orden que 0,08. Una buena idea es que el error de h sea 10 veces menor al que tenemos para no la medida final. Por lo cual
+$$$$    
+$$\epsilon_h \leq 0,008$$ 
+$$$$
+Por lo tanto al medir la altura debemos asegurarnos que su error sea menor a $0,008 \cong 0,01$ 
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+<b>Ejemplo #4</b> Veamos un último ejemplo, similar al anterior para determinar el número de decimales de un número irracional. Calcule el volumen de una esfera de radio r, siendo su valor $r = 5,0 \pm 0,1 cm$
+$$$$      
+Sabiendo que 
+$$$$    
+$V = \frac{4}{3} *\pi* r^3$
+$$$$
+Lo que tenemos que hacer en primer lugar es escribír la expresión del error relativo del volumen. Recordemos que 4/3 es un número racional por lo cual su error relativo es 0. Por otro lado al ser $\pi$ un número irracional el error cometido dependerá de la cantidad de decimales que usemos.
+$$$$
+$$ \epsilon_V = \epsilon_{\pi} + 3 * \epsilon_r$$    
+$$$$    
+$$ \epsilon_V = \frac{\Delta \pi}{\pi_o} + 3 * \frac{\Delta r}{r_o}$$  
+$$$$
+Como vimos en el ejemplo anterior lo importante es que:
+$$\epsilon_{\pi} < 3 * \epsilon_r$$  
+$$$$    
+$$\frac{\Delta \pi}{\pi_o} < 3 * \frac{\Delta r}{r_o}$$  
+$$$$
+$$\frac{\Delta \pi}{\pi_o} < 3 * \frac{0,1}{5,0} = 0,06$$   
+$$$$    
+$$ \boxed{\frac{\Delta \pi}{\pi_o} < 0,06}$$
+$$$$
+<b> Ahora veamos diferentes casos hasta que podamos cumplir con el requisito</b> 
+$$$$
+Consideremos a $\pi$ con una sola cifra decimal, $\pi = 3,1$
+$$$$
+$$\Delta \pi = \pi - \pi_o = 3,14159265... - 3,1 = 0,04$$    
+$$$$
+$$\epsilon_{\pi} = \frac{\Delta \pi}{\pi_o} = \frac{0,04}{3,1} = 0,014$$  
+$$$$
+Cómo $\epsilon_{\pi} < 0,06$ cumple con el requisito.
+$$$$    
+Si queremos asegurarnos el criterio de 10 veces menor que vimos podríamos probar utilizando dos decimales.
+$$$$    
+Consideremos ahora a $\pi$ con dos sola cifra decimal, $\pi = 3,14$
+$$$$
+$$\Delta \pi = \pi - \pi_o = 3,14159265... - 3,14 = 0,04$$    
+$$$$
+$$\epsilon_{\pi} = \frac{\Delta \pi}{\pi_o} = \frac{0,016}{3,14} = 0,0005$$  
+$$$$
+Cómo $\epsilon_{\pi} < 0,06$ cumple con el requisito.  
+$$$$
+Queda al criterio ustedes cuantos decimales usar. Yo particularmente en este caso usaría la segunda opción.    
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>En la aplicación siguiente realice un algoritmo que resuelve el ejemplo 4 permitiéndole modificar los distintos valores para ver como se va afectando el valor final del volumen.</p>
 <p><strong>Antes de comenzar no olvide presionar el botón <span style="color:red">Show Widgets</span> para poder ver la animación</strong></p>
 
 </div>
@@ -13194,30 +13601,61 @@ $$ \boxed{ | X_{01} - X_{02}| > |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 \neq
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="kn">import</span> <span class="nn">math</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span>
-    <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="nb">max</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+    <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span>
+    <span class="n">step</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Radio&#39;</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;.3f&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">dr</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">FloatSlider</span><span class="p">(</span>
+    <span class="n">value</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">step</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Error Radio&#39;</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;.3f&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">dpi</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span>
+    <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="nb">max</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
     <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Lanzamientos&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Decimales de pi&#39;</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
+    <span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">lanzamiento</span><span class="p">(</span><span class="n">Nexp</span><span class="p">,</span> <span class="p">):</span>
-    <span class="n">experimento</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">Nexp</span><span class="p">)</span>
-    <span class="n">caras</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">cecas</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nexp</span><span class="p">)</span> <span class="p">:</span> 
-        <span class="k">if</span> <span class="p">(</span><span class="n">experimento</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">caras</span> <span class="o">+=</span><span class="mi">1</span>
-        <span class="k">else</span> <span class="p">:</span> 
-            <span class="n">cecas</span> <span class="o">+=</span><span class="mi">1</span>
-            
-    <span class="n">media</span> <span class="o">=</span> <span class="p">(</span><span class="n">caras</span> <span class="o">-</span> <span class="n">cecas</span><span class="p">)</span> <span class="o">/</span> <span class="n">Nexp</span>
-    <span class="k">return</span> <span class="s1">&#39;De </span><span class="si">{}</span><span class="s1"> lanzamientos, el número de caras es </span><span class="si">{}</span><span class="s1">; el número de cecas es </span><span class="si">{}</span><span class="s1"> y espera ganar </span><span class="si">{:1.4f}</span><span class="s1"> pesos&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Nexp</span><span class="p">,</span> <span class="n">caras</span><span class="p">,</span> <span class="n">cecas</span><span class="p">,</span> <span class="n">media</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">volumen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span><span class="n">dpi</span><span class="p">):</span>
+    
+    <span class="n">er_r</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">dr</span><span class="o">/</span><span class="n">r</span> <span class="o">+</span> <span class="mf">1e-5</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u03B5</span><span class="s1">r = &#39;</span><span class="p">,</span> <span class="n">er_r</span><span class="p">)</span>
 
-<span class="n">interact</span><span class="p">(</span><span class="n">lanzamiento</span><span class="p">,</span> <span class="n">Nexp</span><span class="o">=</span><span class="n">a</span><span class="p">);</span>
+    <span class="n">stepper</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">**</span> <span class="n">dpi</span>
+    <span class="n">pi</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">trunc</span><span class="p">(</span><span class="n">stepper</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="n">stepper</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u03C0</span><span class="s1"> = &#39;</span><span class="p">,</span> <span class="n">pi</span><span class="p">)</span>
+    <span class="n">ea_pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">-</span><span class="n">pi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u0394\u03C0</span><span class="s1"> = &#39;</span><span class="p">,</span> <span class="n">ea_pi</span><span class="p">)</span>
+    <span class="n">er_pi</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">ea_pi</span><span class="o">/</span><span class="n">pi</span><span class="o">+</span><span class="mf">1e-9</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u03B5</span><span class="s1">r </span><span class="se">\u03C0</span><span class="s1"> = &#39;</span><span class="p">,</span> <span class="n">er_pi</span><span class="p">)</span>
+    
+    <span class="n">er_v</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">er_r</span> <span class="o">+</span> <span class="n">er_pi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u03B5</span><span class="s1">v = </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_v</span><span class="p">))</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="mi">4</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">r</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">pi</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El volumen es:</span><span class="si">{:.4f}</span><span class="s1">cm³&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+    <span class="n">ea_v</span> <span class="o">=</span> <span class="n">er_v</span><span class="o">*</span><span class="n">v</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error absoluto del volumen es:</span><span class="si">{:.4f}</span><span class="s1">cm³&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_v</span><span class="p">))</span>
+
+
+<span class="n">interact</span><span class="p">(</span><span class="n">volumen</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">dr</span><span class="o">=</span><span class="n">dr</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13248,96 +13686,8 @@ $$ \boxed{ | X_{01} - X_{02}| > |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 \neq
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>De la aplicación anterior podemos ver que mientras mas experimentos hagamos, lo mas probable es que al terminar tengamos el mismo dinero que al principio.</p>
-<p>¿Por que le cuento esto? Porque en las mediciones pasa algo similar, al medir una vez, al medir la magnitud se puede sumar o restar de forma aleatoria un error. Digo sumar o restar porque el signo de este error también varía como en el ejemplo de la moneda. Ahora bien al medir una vez no podemos saber nada de el error, pero que pasaría si medimos varias veces. En ese caso la cosa cambia ya que en algunas mediciones mediremos de mas por los errores positivos y en otras de menos por los errores negativos de tal forma que esperaríamos que en algún momento se cancelen. Lamentablemente para que esto ocurra de forma total (eliminar todo el error aleatorio) como se vió con el caso de la moneda habría que realizar infinitas mediciones, cosa que no podemos hacer, pero esto no implica que al realizar esta técnica no mejoremos mucho nuestra medición.</p>
-<p>Como conclusión la mejor forma de estimar el valor real de una medición es hacer la media aritmética de varias medidas.</p>
-<div class="alert alert-block alert-info">
-
-<b>Valor medio</b> Es el valor que vamos a considerar como valor verdadero y lo llamaremos valor representativo $X_o$
-$$$$
-$$ \boxed{ < X_o > = \frac{\sum_{i=1}^N x_i}{N} = \frac{x_1 + x_2 + ... + X_N}{N}} $$    
-$$$$
-<b>Donde:</b>
-$$$$
-$X_o$: es el valor representativo de la medición, que se calcula como el promedio de las mediciones.
-$$$$
-N: son las cantidad de mediciones.
-$$$$
-i: es un número entero que indica la medición que se esta usando.
-$$$$
-$X_i$: es el valor de la medición i.
-
-</div><p>Antes de continuar con la obtención del error absoluto me gustaría indicar algunas cosas a tener en cuenta.</p>
-<div class="alert alert-block alert-warning">
-$\bullet$ Si al realizar varias medidas el resultado es el mismo, significa que los errores aleatorios son mas pequeños de lo que nuestro instrumento puede medir. Por ejemplo si el error aleatorio es de alrededor de 100$\mu$V y nuestro multímetro solo puede realizar medidas de 1mV como mínimo, nuestro instrumento no sera capaz de mensurar el error. Por tal motivo solo será necesario tomar la medida una sola vez.
-$$$$
-$\bullet$ Mientras mas cercanos entre si sean las distintas mediciones, la calidad de medición sera mayor.
-$$$$
-$\bullet$ Debemos medir una magnitud un mínimo de 3 veces para disminuir el error aleatorio, mientras mas mediciones, mejores resultados obtendremos.  
-$$$$    
-$\bullet$ En una serie de mediciones, es tanto más probable un error cuanto menor sea su valor absoluto. Es decir, los errores más pequeños son los más probables de cometer.
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Errores-absolutos-en-mediciones-directas"><span style="color:blue">Errores absolutos en mediciones directas</span><a class="anchor-link" href="#Errores-absolutos-en-mediciones-directas">&#182;</a></h3><p>Sin entrar mucho en detalle, de acuerdo a la teoría de errores de Gauss, se toma como la mejor estimación del error de una serie de N medidas al error cuadrático medió también conocido como varianza ($\sigma^2$). No es un concepto complicado, pero en vez de usar esto utilizaremos una aproximación que simplifica mucho los cálculos. Les dejo en el anexo como es el cálculo original</p>
-<p>Lo que haremos para obtener el error absoluto será obtener el intervalo y considerar la mitad del intervalo como el error. Esto significa que al tener una serie de medidas y con ellas obtener el tamaño del intervalo restando la medida mínima de la máxima y como queremos la mitad del intervalo lo dividiremos por 2. Este es un caso pesimista, el error probablemente sera mayor que el real, pero es una forma rápida de estimarlo.</p>
-<div class="alert alert-block alert-info">
-
-<b>Error absoluto</b> Es el valor que vamos a considerar como el error de la medición y lo representaremos como $\Delta X$
-$$$$
-$$ \boxed{ \Delta X = \frac{X_{máx}-X_{mín}}{2}} $$    
-$$$$
-<b>Donde:</b>
-$$$$
-$X_{máx}$: es el máximo valor medido.
-$$$$
-$X_{mín}$: es el mínimo valor medido
-$$$$
-</div><p>Podemos ver en el intervalo superior 4 medidas distintas de la misma magnitud y que se establece como error absoluto la mitad del intervalo.</p>
-<p>En el intervalo inferior se obtuvo el valor medio de las mediciones ($X_o$) y se marcó los intervalos $\Delta X$ centrándolos en el valor representativo $X_o$
-<img src="Imagenes/error_absoluto.png" width="600" height="360"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="alert alert-block alert-success">
-<b> Ejemplo #1 </b> Suponga que medimos la diferencia de potencial de un resistor 5 veces para minimizar los errores como mencionamos anteriormente y obtuvimos los valores siguientes:
-$$$$    
-$X_1=1,456V; X_2=1,598V; X_3=1,391V; X_4=1,423V$ y $X_5=1,487V$    
-$$$$    
-Lo primero que hacemos es obtener el valor representativo $X_o$ que recordemos que se obtiene con el promedio de las mediciones.
-$$$$     
-$$X_o = \frac{1,456V+1,598V+1,391V+1,423V+1,487V}{5}$$   
-$$$$      
-$$\boxed{X_o = 1,471}$$    
-$$$$  
-El error absoluto vimos que se calcula como la mitad de la diferencia entre el valor máximo y mínimo.
-$$$$  
-$$ \Delta X = \frac{1,598V - 1,391V}{2}$$
-$$$$      
-$$ \boxed{\Delta X = 0,1035}$$    
-$$$$      
-Por último representamos la medida en el formato adecuado con una cifra significativa.    
-$$$$      
-$$ X = 1,5\pm 0,1 V$$    
-$$$$      
-Lo que implica que el <b>1</b> es una cifra exacta y el <b>5</b> contiene al error.    
-
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2><span style="color:red">Mediciones indirectas:<span></h2>
-<p>Recordemos que las medidas indirectas son aquellas en la cual queremos medir una magnitud para la cual tenemos que realizar dos o más medidas y combinarlas a través de una expresión matemática.</p>
-<p>Por ejemplo si queremos medir el volumen de un vaso cilíndrico necesitamos medir el radio y la altura del mismo.</p>
-<p>La clave esta en como combinar los distintos errores de cada medida y los combinamos para obtener el error final, en el caso del ejemplo, el error del volumen. Para esto vamos a ver el siguiente tema que se llama <strong>propagación de errores</strong>.</p>
+<p>Le queda como ejercicio al lector expresar la medida de forma correcta.</p>
+<p>En la página siguiente realizaremos un caso de estudio que normalmente realizamos de forma practica en el aula.</p>
 
 </div>
 </div>
@@ -13347,10 +13697,10 @@ Lo que implica que el <b>1</b> es una cifra exacta y el <b>5</b> contiene al err
 <form method="get" action="https://nicolasferragamo.github.io/AEA/index.html">
  <button type="submit">Inicio
 </form>
-<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/expresion-medicion.html">
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/clasificacion-de-mediciones.html">
  <button type="submit">Anterior
 </form> 
-<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/Propagacion-de-errores.html">
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/Propagacion-de-errores-en-un-circuito.html">
  <button type="submit">Siguiente
 </form>
 </div>

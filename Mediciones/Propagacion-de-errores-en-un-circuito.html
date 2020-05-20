@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 
 
-<title>clasificacion-de-mediciones</title>
+<title>Propagacion-de-errores-en-un-circuito</title>
 
 <style type="text/css">
     /*!
@@ -13130,6 +13130,9 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">savefig</span>
+<span class="kn">import</span> <span class="nn">sys</span> 
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/nico/.local/lib/python3.8/site-packages&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lcapy</span> <span class="kn">import</span> <span class="n">Circuit</span>
 </pre></div>
 
     </div>
@@ -13139,46 +13142,193 @@ div#notebook {
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1><span style="color:blue"> Comparación de mediciones <span></h1>
-<p>Tal vez puedan pensar que comparar medidas sea un tema trivial, pero no lo es tanto. En primer lugar tenemos que comparar la misma magnitud y en la misma unidad, es una obviedad pero no esta de mas recordarlo.</p>
-<p>Lo que comparamos son la misma magnitud que se mide con distintos métodos, o por distintos observadores para poder saber si estas son iguales o distintas. Al hacer esto se dan 3 casos posibles que tenemos que entender para no llegar a conclusiones equivocadas.</p>
-<p>Recordemos que toda medida se representa como un intervalo de indeterminación, dada por la expresión $X = X_o \pm \Delta X$</p>
-<p>(Para los gráficos se utilizan los mismos intervalos de indeterminación y con la misma escala en ejes paralelos.)</p>
-<h3><span style="color:red">Caso a:<span></h3>
-<p>En el primer caso si miramos el gráfico podemos observar que los intervalos se superponen (tienen puntos en común) por lo cual podemos decir que ambas mediciones son <strong>iguales</strong></p>
-<p><img src="Imagenes/a.png" width="600" height="360"></p>
-<div class="alert alert-block alert-info">
-<b>Matemáticamente esto se escribe como:  </b> 
-$$ \boxed{ | X_{01} - X_{02}| < |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 = X_2} $$
-</div><h3><span style="color:red">Caso b:<span></h3>
-<p>En este caso al mirar el gráfico podemos observar que los intervalos no se superponen (no tienen puntos en común) por lo cual podemos decir que ambas mediciones son <strong>distintas</strong></p>
-<p><img src="Imagenes/b.png" width="600" height="360"></p>
-<div class="alert alert-block alert-info">
-<b>Matemáticamente esto se escribe como:  </b> 
-$$ \boxed{ | X_{01} - X_{02}| > |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 \neq X_2} $$
-</div><h3><span style="color:red">Caso c:<span></h3>
-<p>Este es el caso mas difícil. Podemos observar que los intervalos solo tienen un punto en común, por lo cual no conviene tomar ninguna decisión. Lo mejor es realizar medidas nuevas para ver si estamos en el caso a o en el b.</p>
-<p><img src="Imagenes/c.png" width="600" height="360"></p>
+<h1 id="-Propagaci&#243;n-de-errores-en-un-circuito-el&#233;ctrico-"><span style="color:blue"> Propagaci&#243;n de errores en un circuito el&#233;ctrico </span><a class="anchor-link" href="#-Propagaci&#243;n-de-errores-en-un-circuito-el&#233;ctrico-">&#182;</a></h1><p>Ya vimos todas las herramientas necesarias para poder aplicar esto en las mediciones de circuitos. En esta sección vamos a realizar la propagación de errores en un circuito eléctrico paso pos paso.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1><span style="color:blue"> Clasificación de mediciones <span></h1>
-<p>Las medidas pueden clasificarse en:</p>
-<ul>
-<li><p><strong>Mediciones directas:</strong> son aquellas magnitudes que se miden una única vez.</p>
-</li>
-<li><p><strong>Mediciones indirectas:</strong> son aquellas en las cuales para obtener una magnitud hay que realizar varias magnitudes y utilizar una expresión matemática para obtenerla.</p>
-</li>
-</ul>
-<h2><span style="color:red">Mediciones directas:<span></h2>
-<p>En primer lugar quiero aclarar que el campo de la estadística es muy importante en las mediciones, ya que toda medición tiene múltiples factores a considerar. Por lo cual lo que hay que hacer es un tratamiento estadístico de errores en las mediciones. Como esto escapa por mucho el alcance de la materia solo mencionare algunas cosas puntuales a fines informativos solamente.</p>
-<p>Como mencione anteriormente, las medidas directas son aquellas en la cual la magnitud se obtiene con una sola medición. Por ejemplo puedo determinar el largo de una mesa midiendo con una cinta métrica su longitud. Por otro lado si quisiera medir su área (suponiendo que es de forma rectangular) tendría que medir su largo y su ancho y por último utilizar una forma matemática A = l x h para obtenerla, por lo cual su obtención es de forma indirecta.</p>
-<p>Vimos que uno de los tipos de errores son los aleatorios o causales y que los mismos varían de forma aleatoria. Esto nos indica que no podemos encontrar una ecuación matemática que los defina para cada medición, pero por medio de la estadística podemos conocer ciertas cosas que nos permitan disminuir sus efectos en las mediciones.</p>
-<p>Si bien como mencione, no vamos a entrar en detalle, si vamos a tratar de entender la idea que lo rodea. Piense en esto al lanzar una moneda puede obtener como resultado una <strong>cara</strong> o una <strong>ceca</strong> (se escribe con c cuando hablamos de monedas). Cunado lance la moneda aveces le tocara cara y otras veces ceca. Suponga que cuando sale cara usted gana 1 peso y cuando sale ceca usted pierde 1 peso. ¿ Puede decirme cuanto dinero puede esperar tener luego de un par de lanzamientos?. Claro esta que queremos que nos toque cara, pero puede tocarnos cualquiera de los  dos. Si tiramos 10 veces la moneda como son igualmente probables esperaríamos que salga 5 y 5, por lo cual tendríamos el mismo dinero que al principio. Intente realizar el experimento en su casa y vera que tal vez obtenga 5 caras y cinco cecas pero también puede tener mas caras que cecas y viceversa. Sin embargo es muy poco probable que le toquen 10 caras y ninguna ceca. (Los casinos saben de estadística por eso ganan dinero.)</p>
-<p>Para que no se canse al lanzar tantas veces la moneda, le dejo acá una aplicación que hace este experimento la cantidad de veces que usted quiera para que vea los resultados. Notará que al mayor cantidad de veces que lo realice el resultado final estará mas cerca de 0 que de 1 o -1. Utilizaremos la letra <strong>S</strong> para representar la <strong>ceca</strong> para no confundirla con la <strong>C</strong> de <strong>cara</strong>.</p>
+<h2 id="Propagaci&#243;n-de-errores-en-un-circuito-mixto.-"><span style="color:red">Propagaci&#243;n de errores en un circuito mixto. </span><a class="anchor-link" href="#Propagaci&#243;n-de-errores-en-un-circuito-mixto.-">&#182;</a></h2><p>Imagínese que debemos obtener la corriente de cada uno de los componentes del circuito, pero que solo podemos medir el valor de las resistencias y sus diferencias de potencial. El circuito es el siguiente.</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">cct</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">()</span> 
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;BAT 1 0 ;down, l={12\,V}&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R1 1 2;right=2, f_&gt;=IR1, v=V_</span><span class="si">{R1}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R2 2 3  ; down=1.5, f&gt;^=IR2,v=V_</span><span class="si">{R2}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 2 4; right=1.5&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 5 3; left=1.5&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 3 0; left&#39;</span><span class="p">)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R3 4 5  ; down=1.5, f&gt;^=IR3, v=V_</span><span class="si">{R3}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="c1">#cct.add(&#39;W 0 02; down=0.2, ground&#39;)</span>
+<span class="n">cct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">label_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">draw_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"
+width=506
+height=221
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Vamos a establecer una tabla que nos indique los valores Nominales de las resistencias, su valor medido y el valor de las tensiones medidas.</p>
+<table class="egt">
+  <tr>
+    <th scope="row">R</th>
+    <th>R nominal</th>
+    <th>Ro</th>
+    <th>Error absoluto de R</th>
+    <th>Vo</th>
+    <th>Error absoluto de V</th>
+  </tr>
+  <tr>
+    <th>R1</th>
+    <td>220 $\Omega$ </td>
+    <td>215 $\Omega$</td>
+    <td>--</td>
+    <td>5,444 V</td>
+    <td>0,042 V</td>  
+  </tr>
+  <tr>
+    <th>R2</th>
+    <td>470 $\Omega$</td>
+    <td>473 $\Omega$</td>
+    <td>--</td>
+    <td>6,556 V</td>
+    <td>0,076 V</td> 
+  </tr>
+  <tr>
+    <th>R3</th>
+    <td>560 $\Omega$</td>
+    <td>572 $\Omega$</td>
+    <td>--</td>
+    <td>6,556 V</td>
+    <td>0,076 V</td>  
+  </tr>
+</table>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+Lo primero que debemos obtener son los $\Delta R$ y para ello haremos uso de la siguiente $\Delta R = |R_{nominal}- R_o|$
+$$$$    
+$$\Delta R_1 = |220 \Omega- 215\Omega|= 5 \Omega$$
+$$$$    
+$$\Delta R_2 = |470 \Omega- 473\Omega|= 3 \Omega$$ 
+$$$$
+$$\Delta R_3 = |560 \Omega- 572\Omega|= 12 \Omega$$
+</div><p>Ya con estos datos podemos obtener los errores relativos tanto para las resistencias como para las tensiones, que es lo que necesitamos para calcular los errores de las corrientes.</p>
+<div class="alert alert-block alert-info">
+Recuerden que la Ley de Ohm establece que $$\boxed{I = \frac{V}{R}}$$
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="alert alert-block alert-success">
+Recordemos que los errores relativos se calculan con la fórmula $\epsilon = \frac{\Delta X}{X_o}$
+$$$$    
+$$\epsilon_{R1} = \frac{\Delta R_1}{R_{o1}}= \frac{5\Omega}{215\Omega}=0,02326$$
+$$$$    
+$$\epsilon_{R2} = \frac{\Delta R_2}{R_{o2}}= \frac{3\Omega}{473\Omega}=0,0006$$
+$$$$
+$$\epsilon_{R3} = \frac{\Delta R_3}{R_{o3}}= \frac{12\Omega}{572\Omega}=0,0210$$
+$$$$
+$$\epsilon_{V1} = \frac{\Delta V_1}{V_{o1}}= \frac{0,042 V}{5,444 V}=0,0077$$
+$$$$
+$$\epsilon_{V2} = \frac{\Delta V_2}{V_{o2}}= \frac{0,076 V}{6,557 V}=0,0116$$
+$$$$
+$$\epsilon_{V3} = \frac{\Delta V_3}{V_{o3}}= \frac{0,076 V}{6,557 V}=0,0116$$
+</div><p>Ahora resta calcular las corrientes para cada caso y propagar los errores con los datos que tenemos.</p>
+<div class="alert alert-block alert-info">
+Al tener que aplicar una división lo que tenemos que hacer es sumar los errores relativos del divisor y el dividendo. En nuestro caso:
+$$$$    
+$$\boxed{ \epsilon_{I} = \epsilon_{V} + \epsilon_{R}}$$  
+</div><div class="alert alert-block alert-success"> 
+$$ I_{o1} = \frac{V_{o1}}{R_{o1}}= \frac{5,444 V}{215\Omega}=25,321mA$$
+$$$$    
+$$ I_{o2} = \frac{V_{o2}}{R_{o2}}= \frac{6,557 V}{473\Omega}=13,863mA$$
+$$$$
+$$ I_{o3} = \frac{V_{o3}}{R_{o3}}= \frac{6,557 V}{572\Omega}=11,463mA$$
+$$$$
+$$\epsilon_{I1} = \epsilon_{V1} + \epsilon_{R1}= 0,0077 + 0,0233 = 0,0310$$
+$$$$
+$$\epsilon_{I2} = \epsilon_{V2} + \epsilon_{R2}= 0,0116 + 0,0006 = 0,0122$$
+$$$$
+$$\epsilon_{I3} = \epsilon_{V3} + \epsilon_{R3}= 0,0116 + 0,0210 = 0,0326$$
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ahora tenemos que obtener el valor de los errores absolutos y presentar las medidas de forma correcta.</p>
+<div class="alert alert-block alert-info">
+$$\boxed{ \Delta_{I} = \epsilon_{I} * I_o}$$  
+</div><div class="alert alert-block alert-success"> 
+$$ \Delta_{I1} = \epsilon_{I1} * I_{o1} = 0,031 * 25,321mA = 0,785mA$$
+$$$$    
+$$ \Delta_{I2} = \epsilon_{I2} * I_{o2} = 0,0122 * 13,863mA = 0,169mA$$
+$$$$
+$$ \Delta_{I3} = \epsilon_{I3} * I_{o3} = 0,0326 * 11,463mA = 0,374mA$$
+</div><p>Finalmente presentaremos los resultados con dos  cifras significativas</p>
+<div class="alert alert-block alert-info">
+$$ I_1 = I_{o1} \pm \Delta_{I1} = 25,321mA \pm 0,785mA $$ 
+$$$$
+$$ \boxed{  I_1 = 25,32mA \pm 0,76 mA}$$   
+$$$$
+$$ I_2 = I_{o2} \pm \Delta_{I2} = 13,863mA \pm 0,169mA $$ 
+$$$$
+$$ \boxed{  I_2 = 13,86mA \pm 0,17 mA}$$    
+$$$$
+$$ I_2 = I_{o2} \pm \Delta_{I2} = 11,463mA \pm 0,374mA $$ 
+$$$$
+$$ \boxed{  I_2 = 11,46mA \pm 0,37 mA}$$      
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>En la aplicación siguiente realice un algoritmo que resuelve el ejemplo que acabamos de realizar permitiéndole modificar los valores de las resistencias y la tolerancia de las mismas. Los valores de los errores absolutos de tensión los tomo de las hojas de datos de un multímetro. Estudiaremos como obtenerlos en el capítulo siguiente.</p>
 <p><strong>Antes de comenzar no olvide presionar el botón <span style="color:red">Show Widgets</span> para poder ver la animación</strong></p>
 
 </div>
@@ -13194,30 +13344,136 @@ $$ \boxed{ | X_{01} - X_{02}| > |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 \neq
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="kn">from</span> <span class="nn">lcapy</span> <span class="kn">import</span> <span class="n">R</span>
 
-<span class="n">a</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span>
-    <span class="n">value</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="nb">min</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="nb">max</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span>
-    <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Lanzamientos&#39;</span><span class="p">,</span>
+<span class="n">R1</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">220</span><span class="p">,)</span>
+<span class="n">R2</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">470</span><span class="p">,)</span>
+<span class="n">R3</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">560</span><span class="p">,)</span>
+
+<span class="n">tol</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectMultiple</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;0%&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;0.05%&#39;</span><span class="p">:</span><span class="mf">0.005</span><span class="p">,</span> <span class="s1">&#39;0.1%&#39;</span><span class="p">:</span><span class="mf">0.001</span><span class="p">,</span> <span class="s1">&#39;0.25%&#39;</span><span class="p">:</span><span class="mf">0.0025</span><span class="p">,</span> <span class="s1">&#39;0.5%&#39;</span><span class="p">:</span><span class="mf">0.005</span><span class="p">,</span> 
+             <span class="s1">&#39;1%&#39;</span><span class="p">:</span><span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;2%&#39;</span><span class="p">:</span><span class="mf">0.02</span><span class="p">,</span> <span class="s1">&#39;5%&#39;</span><span class="p">:</span><span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;10%&#39;</span><span class="p">:</span><span class="mf">0.1</span><span class="p">,</span> <span class="s1">&#39;20%&#39;</span><span class="p">:</span><span class="mf">0.2</span><span class="p">},</span>
+    <span class="n">value</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="c1">#rows=10,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;Tolerancia de la resisitencia&#39;</span><span class="p">,</span>
+    <span class="n">disabled</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
+<span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="n">R1</span><span class="p">,</span><span class="n">R2</span><span class="p">,</span><span class="n">R3</span><span class="p">,</span><span class="n">tol</span><span class="p">):</span>
+    
+    <span class="n">Ro1</span> <span class="o">=</span> <span class="n">R1</span>
+    <span class="n">Ro2</span> <span class="o">=</span> <span class="n">R2</span>
+    <span class="n">Ro3</span> <span class="o">=</span> <span class="n">R3</span>
+    
+    <span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">tol1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">tol</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> 
+    <span class="n">tol2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">tol</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">tol3</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="n">tol</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">item</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1">#tol = (np.random.normal(0, np.sqrt(tol), size=1)).item(0) </span>
+   
+    <span class="n">R1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol1</span><span class="p">)</span> <span class="o">*</span> <span class="n">R1</span> 
+    <span class="n">R2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol2</span><span class="p">)</span> <span class="o">*</span> <span class="n">R2</span>
+    <span class="n">R3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol3</span><span class="p">)</span> <span class="o">*</span> <span class="n">R3</span>
+    
+    <span class="n">cct</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">()</span> 
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;BAT 1 0 ;down, l={12\,V}&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R1 1 2  </span><span class="si">{R1}</span><span class="s1">;right=2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R1</span><span class="o">=</span><span class="n">R1</span><span class="p">))</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R2 2 3  </span><span class="si">{R2}</span><span class="s1">; down=1.5&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R2</span><span class="o">=</span><span class="n">R2</span><span class="p">))</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 2 4; right=1.5&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 5 3; left=1.5&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 3 0; left&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R3 4 5  </span><span class="si">{R3}</span><span class="s1">; down=1.5&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R3</span><span class="o">=</span><span class="n">R3</span><span class="p">))</span>
+    <span class="c1">#cct.add(&#39;W 0 02; down=0.2, ground&#39;)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">label_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">draw_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1">#RT = R(&#39;R1&#39;) + (R(&#39;R2&#39;) | R(&#39;R3&#39;))</span>
+    <span class="c1">#RT = RT.simplify()</span>
+    <span class="c1">#print(&quot;Esta es la fórmula para el cálculo de RT: &quot;,RT)</span>
+    <span class="n">RT</span> <span class="o">=</span> <span class="n">R1</span> <span class="o">+</span> <span class="n">R2</span><span class="o">*</span><span class="n">R3</span><span class="o">/</span><span class="p">(</span><span class="n">R2</span> <span class="o">+</span> <span class="n">R3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de RT es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">RT</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">V</span> <span class="o">=</span> <span class="mi">12</span>
+    
+    <span class="n">I1</span> <span class="o">=</span> <span class="n">V</span><span class="o">/</span><span class="n">RT</span>
+    <span class="n">V1</span> <span class="o">=</span> <span class="n">R1</span><span class="o">*</span> <span class="n">I1</span>
+    <span class="n">V2</span> <span class="o">=</span> <span class="n">V</span> <span class="o">-</span> <span class="n">V1</span>
+    <span class="n">V3</span> <span class="o">=</span> <span class="n">V2</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de V1 es: </span><span class="si">{:.4f}</span><span class="s2"> V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">V1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de V2 es: </span><span class="si">{:.4f}</span><span class="s2"> V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">V2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de V3 es: </span><span class="si">{:.4f}</span><span class="s2"> V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">V3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">ea_V1</span> <span class="o">=</span> <span class="n">V1</span><span class="o">*</span><span class="mf">0.007</span> <span class="o">+</span> <span class="mf">3e-3</span>
+    <span class="n">ea_V2</span> <span class="o">=</span> <span class="n">V2</span><span class="o">*</span><span class="mf">0.007</span> <span class="o">+</span> <span class="mf">30e-3</span>
+    <span class="n">ea_V3</span> <span class="o">=</span> <span class="n">V3</span><span class="o">*</span><span class="mf">0.007</span> <span class="o">+</span> <span class="mf">30e-3</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de V1 es: </span><span class="si">{:.4f}</span><span class="s2"> V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_V1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de V2 es: </span><span class="si">{:.4f}</span><span class="s2"> V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_V2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de V3 es: </span><span class="si">{:.4f}</span><span class="s2"> V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_V3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+    <span class="n">er_V1</span> <span class="o">=</span> <span class="n">ea_V1</span> <span class="o">/</span> <span class="n">V1</span>
+    <span class="n">er_V2</span> <span class="o">=</span> <span class="n">ea_V1</span> <span class="o">/</span> <span class="n">V2</span>
+    <span class="n">er_V3</span> <span class="o">=</span> <span class="n">ea_V1</span> <span class="o">/</span> <span class="n">V3</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de V1 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_V1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de V2 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_V2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de V3 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_V3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">ea_R1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Ro1</span> <span class="o">-</span> <span class="n">R1</span><span class="p">)</span>
+    <span class="n">ea_R2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Ro2</span> <span class="o">-</span> <span class="n">R2</span><span class="p">)</span>
+    <span class="n">ea_R3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Ro3</span> <span class="o">-</span> <span class="n">R3</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de R1 es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_R1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de R2 es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_R2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de R3 es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_R3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">er_R1</span> <span class="o">=</span> <span class="n">ea_R1</span> <span class="o">/</span> <span class="n">R1</span>
+    <span class="n">er_R2</span> <span class="o">=</span> <span class="n">ea_R1</span> <span class="o">/</span> <span class="n">R2</span>
+    <span class="n">er_R3</span> <span class="o">=</span> <span class="n">ea_R1</span> <span class="o">/</span> <span class="n">R3</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de R1 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_R1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de R2 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_R2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de R3 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_R3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">er_I1</span> <span class="o">=</span> <span class="n">er_V1</span> <span class="o">+</span> <span class="n">er_R1</span>
+    <span class="n">er_I2</span> <span class="o">=</span> <span class="n">er_V2</span> <span class="o">+</span> <span class="n">er_R2</span>
+    <span class="n">er_I3</span> <span class="o">=</span> <span class="n">er_V3</span> <span class="o">+</span> <span class="n">er_R3</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de I1 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_I1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de I2 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_I2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error relativo de I3 es: </span><span class="si">{:.4f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">er_I3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">ea_I1</span> <span class="o">=</span> <span class="n">I1</span><span class="o">*</span><span class="n">er_I1</span>
+    <span class="n">ea_I2</span> <span class="o">=</span> <span class="n">I1</span><span class="o">*</span><span class="n">er_I2</span>
+    <span class="n">ea_I3</span> <span class="o">=</span> <span class="n">I1</span><span class="o">*</span><span class="n">er_I3</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de I1 es: </span><span class="si">{:.4f}</span><span class="s2"> A&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_I1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de I2 es: </span><span class="si">{:.4f}</span><span class="s2"> A&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_I2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El error absoluto de I3 es: </span><span class="si">{:.4f}</span><span class="s2"> A&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_I3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="n">I2</span> <span class="o">=</span> <span class="n">V2</span> <span class="o">/</span> <span class="n">R2</span>
+    <span class="n">I3</span> <span class="o">=</span> <span class="n">V3</span> <span class="o">/</span> <span class="n">R3</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de I1 es: </span><span class="si">{:.4E}</span><span class="s2"> A&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de I2 es: </span><span class="si">{:.4E}</span><span class="s2"> A&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de I3 es: </span><span class="si">{:.4E}</span><span class="s2"> A&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Los resultados son los siguientes:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I1 =</span><span class="si">{:.4E}</span><span class="s2">A +/- </span><span class="si">{:.4E}</span><span class="s2">A &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I1</span><span class="p">,</span><span class="n">ea_I1</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I2 =</span><span class="si">{:.4E}</span><span class="s2">A +/- </span><span class="si">{:.4E}</span><span class="s2">A &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I2</span><span class="p">,</span><span class="n">ea_I2</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I3 =</span><span class="si">{:.4E}</span><span class="s2">A +/- </span><span class="si">{:.4E}</span><span class="s2">A &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">I3</span><span class="p">,</span><span class="n">ea_I3</span><span class="p">))</span>
 
-<span class="k">def</span> <span class="nf">lanzamiento</span><span class="p">(</span><span class="n">Nexp</span><span class="p">,</span> <span class="p">):</span>
-    <span class="n">experimento</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">Nexp</span><span class="p">)</span>
-    <span class="n">caras</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">cecas</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nexp</span><span class="p">)</span> <span class="p">:</span> 
-        <span class="k">if</span> <span class="p">(</span><span class="n">experimento</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="n">caras</span> <span class="o">+=</span><span class="mi">1</span>
-        <span class="k">else</span> <span class="p">:</span> 
-            <span class="n">cecas</span> <span class="o">+=</span><span class="mi">1</span>
-            
-    <span class="n">media</span> <span class="o">=</span> <span class="p">(</span><span class="n">caras</span> <span class="o">-</span> <span class="n">cecas</span><span class="p">)</span> <span class="o">/</span> <span class="n">Nexp</span>
-    <span class="k">return</span> <span class="s1">&#39;De </span><span class="si">{}</span><span class="s1"> lanzamientos, el número de caras es </span><span class="si">{}</span><span class="s1">; el número de cecas es </span><span class="si">{}</span><span class="s1"> y espera ganar </span><span class="si">{:1.4f}</span><span class="s1"> pesos&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Nexp</span><span class="p">,</span> <span class="n">caras</span><span class="p">,</span> <span class="n">cecas</span><span class="p">,</span> <span class="n">media</span><span class="p">)</span>
 
-<span class="n">interact</span><span class="p">(</span><span class="n">lanzamiento</span><span class="p">,</span> <span class="n">Nexp</span><span class="o">=</span><span class="n">a</span><span class="p">);</span>
+<span class="n">interact</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">R1</span><span class="o">=</span><span class="n">R1</span><span class="p">,</span><span class="n">R2</span><span class="o">=</span><span class="n">R2</span><span class="p">,</span><span class="n">R3</span><span class="o">=</span><span class="n">R3</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13248,96 +13504,7 @@ $$ \boxed{ | X_{01} - X_{02}| > |\Delta X_1| + |\Delta X_2| \Rightarrow X_1 \neq
   </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>De la aplicación anterior podemos ver que mientras mas experimentos hagamos, lo mas probable es que al terminar tengamos el mismo dinero que al principio.</p>
-<p>¿Por que le cuento esto? Porque en las mediciones pasa algo similar, al medir una vez, al medir la magnitud se puede sumar o restar de forma aleatoria un error. Digo sumar o restar porque el signo de este error también varía como en el ejemplo de la moneda. Ahora bien al medir una vez no podemos saber nada de el error, pero que pasaría si medimos varias veces. En ese caso la cosa cambia ya que en algunas mediciones mediremos de mas por los errores positivos y en otras de menos por los errores negativos de tal forma que esperaríamos que en algún momento se cancelen. Lamentablemente para que esto ocurra de forma total (eliminar todo el error aleatorio) como se vió con el caso de la moneda habría que realizar infinitas mediciones, cosa que no podemos hacer, pero esto no implica que al realizar esta técnica no mejoremos mucho nuestra medición.</p>
-<p>Como conclusión la mejor forma de estimar el valor real de una medición es hacer la media aritmética de varias medidas.</p>
-<div class="alert alert-block alert-info">
-
-<b>Valor medio</b> Es el valor que vamos a considerar como valor verdadero y lo llamaremos valor representativo $X_o$
-$$$$
-$$ \boxed{ < X_o > = \frac{\sum_{i=1}^N x_i}{N} = \frac{x_1 + x_2 + ... + X_N}{N}} $$    
-$$$$
-<b>Donde:</b>
-$$$$
-$X_o$: es el valor representativo de la medición, que se calcula como el promedio de las mediciones.
-$$$$
-N: son las cantidad de mediciones.
-$$$$
-i: es un número entero que indica la medición que se esta usando.
-$$$$
-$X_i$: es el valor de la medición i.
-
-</div><p>Antes de continuar con la obtención del error absoluto me gustaría indicar algunas cosas a tener en cuenta.</p>
-<div class="alert alert-block alert-warning">
-$\bullet$ Si al realizar varias medidas el resultado es el mismo, significa que los errores aleatorios son mas pequeños de lo que nuestro instrumento puede medir. Por ejemplo si el error aleatorio es de alrededor de 100$\mu$V y nuestro multímetro solo puede realizar medidas de 1mV como mínimo, nuestro instrumento no sera capaz de mensurar el error. Por tal motivo solo será necesario tomar la medida una sola vez.
-$$$$
-$\bullet$ Mientras mas cercanos entre si sean las distintas mediciones, la calidad de medición sera mayor.
-$$$$
-$\bullet$ Debemos medir una magnitud un mínimo de 3 veces para disminuir el error aleatorio, mientras mas mediciones, mejores resultados obtendremos.  
-$$$$    
-$\bullet$ En una serie de mediciones, es tanto más probable un error cuanto menor sea su valor absoluto. Es decir, los errores más pequeños son los más probables de cometer.
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Errores-absolutos-en-mediciones-directas"><span style="color:blue">Errores absolutos en mediciones directas</span><a class="anchor-link" href="#Errores-absolutos-en-mediciones-directas">&#182;</a></h3><p>Sin entrar mucho en detalle, de acuerdo a la teoría de errores de Gauss, se toma como la mejor estimación del error de una serie de N medidas al error cuadrático medió también conocido como varianza ($\sigma^2$). No es un concepto complicado, pero en vez de usar esto utilizaremos una aproximación que simplifica mucho los cálculos. Les dejo en el anexo como es el cálculo original</p>
-<p>Lo que haremos para obtener el error absoluto será obtener el intervalo y considerar la mitad del intervalo como el error. Esto significa que al tener una serie de medidas y con ellas obtener el tamaño del intervalo restando la medida mínima de la máxima y como queremos la mitad del intervalo lo dividiremos por 2. Este es un caso pesimista, el error probablemente sera mayor que el real, pero es una forma rápida de estimarlo.</p>
-<div class="alert alert-block alert-info">
-
-<b>Error absoluto</b> Es el valor que vamos a considerar como el error de la medición y lo representaremos como $\Delta X$
-$$$$
-$$ \boxed{ \Delta X = \frac{X_{máx}-X_{mín}}{2}} $$    
-$$$$
-<b>Donde:</b>
-$$$$
-$X_{máx}$: es el máximo valor medido.
-$$$$
-$X_{mín}$: es el mínimo valor medido
-$$$$
-</div><p>Podemos ver en el intervalo superior 4 medidas distintas de la misma magnitud y que se establece como error absoluto la mitad del intervalo.</p>
-<p>En el intervalo inferior se obtuvo el valor medio de las mediciones ($X_o$) y se marcó los intervalos $\Delta X$ centrándolos en el valor representativo $X_o$
-<img src="Imagenes/error_absoluto.png" width="600" height="360"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<div class="alert alert-block alert-success">
-<b> Ejemplo #1 </b> Suponga que medimos la diferencia de potencial de un resistor 5 veces para minimizar los errores como mencionamos anteriormente y obtuvimos los valores siguientes:
-$$$$    
-$X_1=1,456V; X_2=1,598V; X_3=1,391V; X_4=1,423V$ y $X_5=1,487V$    
-$$$$    
-Lo primero que hacemos es obtener el valor representativo $X_o$ que recordemos que se obtiene con el promedio de las mediciones.
-$$$$     
-$$X_o = \frac{1,456V+1,598V+1,391V+1,423V+1,487V}{5}$$   
-$$$$      
-$$\boxed{X_o = 1,471}$$    
-$$$$  
-El error absoluto vimos que se calcula como la mitad de la diferencia entre el valor máximo y mínimo.
-$$$$  
-$$ \Delta X = \frac{1,598V - 1,391V}{2}$$
-$$$$      
-$$ \boxed{\Delta X = 0,1035}$$    
-$$$$      
-Por último representamos la medida en el formato adecuado con una cifra significativa.    
-$$$$      
-$$ X = 1,5\pm 0,1 V$$    
-$$$$      
-Lo que implica que el <b>1</b> es una cifra exacta y el <b>5</b> contiene al error.    
-
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2><span style="color:red">Mediciones indirectas:<span></h2>
-<p>Recordemos que las medidas indirectas son aquellas en la cual queremos medir una magnitud para la cual tenemos que realizar dos o más medidas y combinarlas a través de una expresión matemática.</p>
-<p>Por ejemplo si queremos medir el volumen de un vaso cilíndrico necesitamos medir el radio y la altura del mismo.</p>
-<p>La clave esta en como combinar los distintos errores de cada medida y los combinamos para obtener el error final, en el caso del ejemplo, el error del volumen. Para esto vamos a ver el siguiente tema que se llama <strong>propagación de errores</strong>.</p>
+<p>Le queda como ejercicio al lector expresar la medida de forma correcta.</p>
 
 </div>
 </div>
@@ -13347,10 +13514,10 @@ Lo que implica que el <b>1</b> es una cifra exacta y el <b>5</b> contiene al err
 <form method="get" action="https://nicolasferragamo.github.io/AEA/index.html">
  <button type="submit">Inicio
 </form>
-<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/expresion-medicion.html">
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/Propagacion-de-errores.html">
  <button type="submit">Anterior
 </form> 
-<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/Propagacion-de-errores.html">
+<form method="get" action="https://nicolasferragamo.github.io/AEA/Mediciones/https://nicolasferragamo.github.io/AEA/Mediciones/Anexo1.html">
  <button type="submit">Siguiente
 </form>
 </div>

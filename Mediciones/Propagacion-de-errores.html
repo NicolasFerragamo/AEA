@@ -13634,10 +13634,7 @@ Queda al criterio ustedes cuantos decimales usar. Yo particularmente en este cas
     <span class="n">readout_format</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span>
 <span class="p">)</span>
 
-
-<span class="k">def</span> <span class="nf">volumen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span><span class="n">dpi</span><span class="p">):</span>
-    
-    
+<span class="k">def</span> <span class="nf">sphere</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 
@@ -13648,6 +13645,8 @@ Queda al criterio ustedes cuantos decimales usar. Yo particularmente en este cas
     <span class="n">z</span> <span class="o">=</span> <span class="n">r</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">volumen</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">dr</span><span class="p">,</span><span class="n">dpi</span><span class="p">):</span>
     
     <span class="n">er_r</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">dr</span><span class="o">/</span><span class="n">r</span> <span class="o">+</span> <span class="mf">1e-5</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\u03B5</span><span class="s1">r = &#39;</span><span class="p">,</span> <span class="n">er_r</span><span class="p">)</span>
@@ -13667,8 +13666,8 @@ Queda al criterio ustedes cuantos decimales usar. Yo particularmente en este cas
     <span class="n">ea_v</span> <span class="o">=</span> <span class="n">er_v</span><span class="o">*</span><span class="n">v</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El error absoluto del volumen es:</span><span class="si">{:.4f}</span><span class="s1">cm³&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ea_v</span><span class="p">))</span>
 
-
 <span class="n">interact</span><span class="p">(</span><span class="n">volumen</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">dr</span><span class="o">=</span><span class="n">dr</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">);</span>
+<span class="n">interact</span><span class="p">(</span><span class="n">sphere</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -13678,6 +13677,20 @@ Queda al criterio ustedes cuantos decimales usar. Yo particularmente en este cas
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+    
+
+
+
+  <div class="output_subarea output_widget_view ">
+    <button class="js-nbinteract-widget">
+      Loading widgets...
+    </button>
+  </div>
+
+</div>
 
 <div class="output_area">
 

@@ -13350,8 +13350,11 @@ $$ \boxed{  I_2 = 11,46mA \pm 0,37 mA}$$
 
 
 <span class="n">R1</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">220</span><span class="p">)</span>
+<span class="n">R1</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">handle_color</span> <span class="o">=</span> <span class="s1">&#39;lightblue&#39;</span>
 <span class="n">R2</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">470</span><span class="p">)</span>
+<span class="n">R2</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">handle_color</span> <span class="o">=</span> <span class="s1">&#39;lightblue&#39;</span>
 <span class="n">R3</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mi">560</span><span class="p">)</span>
+<span class="n">R3</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">handle_color</span> <span class="o">=</span> <span class="s1">&#39;lightblue&#39;</span>
 
 <span class="n">tol</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectMultiple</span><span class="p">(</span>
     <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;0%&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;0.05%&#39;</span><span class="p">:</span><span class="mf">0.005</span><span class="p">,</span> <span class="s1">&#39;0.1%&#39;</span><span class="p">:</span><span class="mf">0.001</span><span class="p">,</span> <span class="s1">&#39;0.25%&#39;</span><span class="p">:</span><span class="mf">0.0025</span><span class="p">,</span> <span class="s1">&#39;0.5%&#39;</span><span class="p">:</span><span class="mf">0.005</span><span class="p">,</span> 
@@ -13379,17 +13382,17 @@ $$ \boxed{  I_2 = 11,46mA \pm 0,37 mA}$$
     <span class="n">R1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol1</span><span class="p">)</span> <span class="o">*</span> <span class="n">R1</span> 
     <span class="n">R2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol2</span><span class="p">)</span> <span class="o">*</span> <span class="n">R2</span>
     <span class="n">R3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">tol3</span><span class="p">)</span> <span class="o">*</span> <span class="n">R3</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    cct = Circuit() </span>
-<span class="sd">    cct.add(&#39;BAT 1 0 ;down, l={12\,V}&#39;)</span>
-<span class="sd">    cct.add(&#39;R1 1 2  {R1};right=2&#39;.format(R1=R1))</span>
-<span class="sd">    cct.add(&#39;R2 2 3  {R2}; down=1.5&#39;.format(R2=R2))</span>
-<span class="sd">    cct.add(&#39;W 2 4; right=1.5&#39;)</span>
-<span class="sd">    cct.add(&#39;W 5 3; left=1.5&#39;)</span>
-<span class="sd">    cct.add(&#39;W 3 0; left&#39;)</span>
-<span class="sd">    cct.add(&#39;R3 4 5  {R3}; down=1.5&#39;.format(R3=R3))</span>
-<span class="sd">    cct.draw(label_nodes=False,draw_nodes=True)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="n">cct</span> <span class="o">=</span> <span class="n">Circuit</span><span class="p">()</span> 
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;BAT 1 0 ;down, l={12\,V}&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R1 1 2  </span><span class="si">{R1}</span><span class="s1">;right=2&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R1</span><span class="o">=</span><span class="n">R1</span><span class="p">))</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R2 2 3  </span><span class="si">{R2}</span><span class="s1">; down=1.5&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R2</span><span class="o">=</span><span class="n">R2</span><span class="p">))</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 2 4; right=1.5&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 5 3; left=1.5&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;W 3 0; left&#39;</span><span class="p">)</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;R3 4 5  </span><span class="si">{R3}</span><span class="s1">; down=1.5&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R3</span><span class="o">=</span><span class="n">R3</span><span class="p">))</span>
+    <span class="n">cct</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">label_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">draw_nodes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de R1 es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R1</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de R2 es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R2</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de R3 es: </span><span class="si">{:.4f}</span><span class="s2"> </span><span class="se">\u03A9</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">R3</span><span class="p">))</span>

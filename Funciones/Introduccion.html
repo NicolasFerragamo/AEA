@@ -13131,7 +13131,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">savefig</span>
 <span class="kn">from</span> <span class="nn">pandas</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">IFrame</span>
 <span class="kn">import</span> <span class="nn">sys</span> 
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/nico/.local/lib/python3.8/site-packages&#39;</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">lcapy</span> <span class="kn">import</span> <span class="n">Circuit</span>
@@ -13318,7 +13318,58 @@ $$\boxed{f(x)=x^2}$$
 </div><p>Al símbolo que representa un número arbitrario (por lo general <strong>x</strong> o <strong>t</strong>) se lo llama <span style="color:red"> <b>variable independiente</b> </span>.</p>
 <p>Al símbolo que representa a la <strong>imagen</strong> de <strong>f</strong> (por lo general <strong>y</strong> ó <strong>f(x)</strong>) se lo llama <span style="color:red"> <b>variable dependiente</b> </span> ya que depende de la variable independiente.</p>
 <div> <img src="imagenes/f.png"  width="400" height="500" /> </div><p>Podemos pensar a una función como una máquina.Si <span style="color:brown"> <b> x </b> </span> esta en el <strong>dominio</strong> de la función <span style="color:brown"> <b> f </b> </span>, entonces cuando se introduce <span style="color:brown"> <b> x </b> </span> en la máquina, es aceptada una <strong>entrada</strong> y la máquina produce una <strong>salida</strong> <span style="color:brown"> <b> f(x) </b> </span> de acuerdo con la regla de la función. Así se puede considerar al dominio como el conjunto de entrada posibles y a la imagen como el conjunto de salidas posibles.</p>
-<div> <img src="imagenes/maquina.png"  width="600" height="700" /> </div><p>Otra forma de indentificar una función es mediante un diagrama de flechas. Cada flecha conecta un elemento de <strong>A</strong> con un elemento de <strong>B</strong>.</p>
+<div> <img src="imagenes/maquina.png"  width="600" height="700" /> </div><p>Acá tienen una aplicación para entender el concepto de función. Consta de una máquina donde le dan el dato de entrada (<strong>variable independiente</strong>) y obtienen la salida (<strong>variable dependiente</strong>)</p>
+
+</div>
+</div>
+</div>
+
+  
+
+  <div class="nbinteract-hide_in
+      cell border-box-sizing code_cell rendered">
+    <div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># nbi:hide_in</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s1">&#39;https://phet.colorado.edu/sims/html/function-builder/latest/function-builder_en.html&#39;</span><span class="p">,</span><span class="n">width</span><span class="o">=</span><span class="s2">&quot;800&quot;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s2">&quot;600&quot;</span><span class="p">,</span><span class="n">scrolling</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+        <iframe
+            width="800"
+            height="600"
+            src="https://phet.colorado.edu/sims/html/function-builder/latest/function-builder_en.html?scrolling=yes"
+            frameborder="0"
+            allowfullscreen
+        ></iframe>
+        
+</div>
+
+</div>
+
+</div>
+</div>
+
+  </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Otra forma de indentificar una función es mediante un diagrama de flechas. Cada flecha conecta un elemento de <strong>A</strong> con un elemento de <strong>B</strong>.</p>
 <div> <img src="imagenes/flechas.png"  width="600" height="700" /> </div><p>En la siguiente sección veremos algunas de las características de las funciones.</p>
 
 </div>
